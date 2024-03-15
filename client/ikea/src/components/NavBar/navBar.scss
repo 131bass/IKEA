@@ -1,0 +1,166 @@
+nav {
+    width: 85vw;
+    margin-right: 10%;
+}
+
+.topNav {
+    width: 90%;
+    display: flex;
+    margin-top: 5%;
+    gap: 20px;
+
+    .navSearchBox {
+        background-color: #f5f5f5;
+        border-radius: 50em;
+        height: 3.125rem;
+        width: 60%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: space-around;
+        padding: 0px 15px;
+
+        img {
+            width: 1.5em;
+            height: 1.5em;
+        }
+
+        button {}
+
+        &:hover {
+            background-color: #dbd9d9;
+            cursor: text;
+        }
+
+        input {
+            border: none;
+            background: none;
+            height: 100%;
+            font-size: 1em;
+            flex: 4;
+
+            &:focus {
+                box-decoration-break: clone;
+                text-decoration: none;
+            }
+        }
+
+        textarea:focus,
+        input:focus {
+            outline: none;
+        }
+
+        ::placeholder {
+            color: rgb(64, 64, 64);
+
+
+        }
+
+    }
+
+    button {
+        background: none;
+        border: none;
+        border-radius: 50em;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #dbd9d9;
+        }
+    }
+}
+
+.navLinks {
+
+    overflow: hidden;
+    // position: relative;
+
+
+    .links {
+        display: flex;
+        gap: 25px;
+
+        font-size: 0.9em;
+
+        span {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            cursor: pointer;
+        }
+
+        img {
+            width: 1.5em;
+        }
+
+    }
+
+    .navCategoriesWrapper {
+        position: relative;
+        width: 100%;
+
+        &:hover {
+            .arrowButtons {
+                display: block;
+            }
+        }
+
+        .arrowButtons {
+            display: none;
+
+        }
+
+        button {
+            position: absolute;
+            z-Index: 3;
+            top: 40%;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+
+            &:hover {
+                background-color: rgb(53, 52, 52);
+                cursor: pointer;
+            }
+
+            &.backward {
+                right: 1%
+            }
+
+            &.forward {
+                left: 1%;
+            }
+        }
+
+
+
+        .navCategories {
+            width: fit-content;
+            display: flex;
+            height: 230px;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+            position: relative;
+            transition: all 0.2s;
+
+            .category {
+                width: 120px;
+                height: 120px;
+                cursor: pointer;
+
+                &:hover {
+                    text-decoration-line: underline;
+                }
+
+                img {
+                    height: 80px;
+                }
+
+            }
+        }
+    }
+}
