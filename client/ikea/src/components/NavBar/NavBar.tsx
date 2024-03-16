@@ -26,15 +26,17 @@ const NavBar = () => {
         },
         { name: "מוצרים חדשים וקולקציות" },
         { name: "השראה ורעיונות" },
-        { name: "תיאום פגישות" },
+        { name: "תאום פגישות" },
         { name: "שירות לקוחות" },
         { name: "שעות פעילות" },
         { name: "לאכול באיקאה" },
         { name: "עוד" }
 
     ]
+    useEffect(() => {
+        showCategories("מוצרים")
+    }, [])
 
-   
 
     return (
         <nav>
@@ -52,38 +54,55 @@ const NavBar = () => {
                 <div className="links">
                     {navLinksArr.map((link) => {
                         return (
-                            <>
+                            <div className="link">
                                 {link.imgURL ?
-                                    <span onClick={() => {
-                                        showCategories(link.name)
-                                    }}>
+                                    <span onClick={() => { showCategories(link.name) }}>
                                         <img src={link.imgURL} alt={link.name} />{link.name}</span>
-                                    : <span>{link.name}</span>}
-                            </>
+                                    :
+                                    <span onClick={() => { showCategories(link.name) }}>{link.name}</span>}
+                            </div>
                         )
                     })}
                 </div>
-                <div className="navCategoriesWrapper">
-                    <div className='arrowButtons'>
-
-                        <button className="backward" style={scroll == 0 ? { display: "none" } : { display: "block" }} onClick={backward}>&lt;</button>
-                        <button className='forward' style={scroll > outerWidth + 140 ? { display: "none" } : { display: "block" }} onClick={forward}>	&gt;</button>
+                {arrToRender.withIMG ?
+                    <>
+                        <div className="navCategoriesWrapper">
+                            <div className='arrowButtons'>
+                                <button className="backward" style={scroll == 0 ? { display: "none" } : { display: "block" }} onClick={backward}>&lt;</button>
+                                <button className='forward' style={scroll > outerWidth + 140 ? { display: "none" } : { display: "block" }} onClick={forward}>	&gt;</button>
+                            </div>
+                            <div className="navCategories" style={{ left: `${scroll}px` }}>
+                                {arrToRender.categories.map((item) => {
+                                    return (
+                                        <>
+                                            <div className='category'>
+                                                <img src={item.imgURL} alt={item.name} />
+                                                <p>{item.name}</p>
+                                            </div>
+                                        </>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                        <div className="scrollbar" style={{right:`${scroll/2.3}px`}}></div>
+                    </>
+                    :
+                    <div className="navCategoriesWrapper" style={{ borderBottom: "none" }}>
+                        <div className="navCategories_withoutIMG" style={arrToRender.categories.length > 5 ? { columnCount: "2", width: "50%" } : {}}>
+                            {arrToRender.name == "עוד" || arrToRender.name == "שעות פעילות" ? null : <p className="showAll" style={{ fontWeight: "bold" }}>הצג הכל - {arrToRender.name}</p>}
+                            {arrToRender.categories.map((item) => {
+                                return (
+                                    <>
+                                        <div className='category'>
+                                            <p>{item.name}</p>
+                                        </div>
+                                    </>
+                                )
+                            })}
+                        </div>
                     </div>
-
-                    <div className="navCategories" style={{ left: `${scroll}px` }}>
-                        {arrToRender.map((item) => {
-                            return (
-                                <>
-                                    <div className='category'>
-
-                                        <img src={item.imgURL} alt={item.name} />
-                                        <p>{item.name}</p>
-                                    </div>
-                                </>
-                            )
-                        })}
-                    </div>
-                </div>
+                }
+                {/* </div> */}
             </div>
         </nav>
     )

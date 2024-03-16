@@ -25,7 +25,7 @@ nav {
             height: 1.5em;
         }
 
-        button {}
+
 
         &:hover {
             background-color: #dbd9d9;
@@ -73,14 +73,17 @@ nav {
 .navLinks {
 
     overflow: hidden;
-    // position: relative;
 
 
     .links {
         display: flex;
         gap: 25px;
-
         font-size: 0.9em;
+        border-bottom: 1px solid rgb(211, 211, 211);
+        padding: 1em 0em;
+        font-weight: bold;
+        color: gray;
+        width: 93%;
 
         span {
             display: flex;
@@ -93,13 +96,25 @@ nav {
             width: 1.5em;
         }
 
+        .link:active {
+            border-bottom: 3px solid rgb(0, 0, 152);
+            color: black;
+            padding: 0 0 1em 0;
+            margin-bottom: -1.1em;
+
+
+        }
+
     }
 
     .navCategoriesWrapper {
         position: relative;
         width: 100%;
+    border-bottom: 2px solid #d4d4d4;
+
 
         &:hover {
+            
             .arrowButtons {
                 display: block;
             }
@@ -146,10 +161,30 @@ nav {
             gap: 20px;
             position: relative;
             transition: all 0.2s;
+            margin: -1em;
+
+            &_withoutIMG {
+                color: gray;
+                margin-top: 20px;
+
+                .showAll {
+                    font-weight: bold;
+                    color: rgb(56, 56, 56);
+                    margin-top: 0px;
+                }
+
+                .category,
+                .showAll {
+                    &:hover {
+                        text-decoration-line: underline;
+                    }
+                }
+            }
 
             .category {
-                width: 120px;
-                height: 120px;
+                width: 7.5em;
+                height: 7.5em;
+                min-width: fit-content;
                 cursor: pointer;
 
                 &:hover {
@@ -162,5 +197,14 @@ nav {
 
             }
         }
+    }
+    .scrollbar{
+        margin-top: -2px;
+        height: 2px;
+        width: 40%;
+        background-color: black;
+        position: relative;
+        transition: all 0.2s;
+     
     }
 }

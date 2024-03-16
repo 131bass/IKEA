@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import categoriesArr from '../../utils/categories';
+import categoriesArr, { CategoriesTypeArr, CategoryType } from '../../utils/categories';
 
 
 export const useGetSearch = () => {
@@ -12,15 +12,14 @@ export const useGetSearch = () => {
 
 
 export const useRenderNav = () => {
-    const [arrToRender, setArrToRender] = useState<any[]>([])
+    const [arrToRender, setArrToRender] = useState<CategoriesTypeArr>(categoriesArr[0])
     const showCategories = (linkName: string) => {
-        switch (linkName) {
-            case "מוצרים":
-                setArrToRender(categoriesArr)
-                break;
-            case "חדרים":
-                setArrToRender([])
-                break;
+
+        const categoriesArrToRender = (categoriesArr.find((element) => element.name == linkName))
+
+        if (categoriesArrToRender) {
+            setArrToRender(categoriesArrToRender)
+
         }
     }
     return { arrToRender, showCategories }
