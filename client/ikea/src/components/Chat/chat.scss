@@ -1,0 +1,44 @@
+@keyframes jump {
+    0% {
+        bottom: 5%;
+    }
+
+    25% {
+        bottom: 9%;
+    }
+
+    50% {
+        bottom: 5%;
+    }
+
+    65% {
+        bottom: 7.5%;
+    }
+
+    80% {
+        bottom: 5%;
+    }
+
+    90% {
+        bottom: 6%;
+    }
+
+    100% {
+        bottom: 5%;
+    }
+}
+
+.chatWrapper {
+    position: relative;
+    transition: all 0.2s;
+
+    background-color: aqua;
+
+    img {
+        position: fixed;
+        left: 2%;
+        bottom: 5%;
+        animation: jump 0.8s ease-out 5s 1, jump 0.8s ease-out 9s 1;
+    }
+
+}

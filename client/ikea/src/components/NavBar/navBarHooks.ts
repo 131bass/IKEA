@@ -30,12 +30,12 @@ export const useScrollBar = () => {
 
     const backward = () => {
         if (scroll > 0) {
-            setScroll(scroll - 141)
+            setScroll(scroll - 140)
         }
     }
     const forward = () => {
         if (scroll < 1540) {
-            setScroll(scroll + 141)
+            setScroll(scroll + 140)
         }
     }
     return { backward, forward, scroll }

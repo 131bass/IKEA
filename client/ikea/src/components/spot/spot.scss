@@ -1,0 +1,79 @@
+.outer {
+    width: 1.6em;
+    height: 1.6em;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px rgba(128, 128, 128, 0.7) solid;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.75);
+        border: 2px rgba(255, 255, 255) solid;
+
+        .inner {
+
+            width: 0.5em;
+            height: 0.5em;
+        }
+
+    }
+
+    .inner {
+        width: 0.75em;
+        height: 0.75em;
+        background-color: white;
+        border-radius: 50%;
+    }
+
+}
+
+.tag {
+    margin-right: 200px;
+    background-color: white;
+    width: 8em;
+    height: 7em;
+    border: 1px rgb(185, 185, 185) solid;
+    box-shadow: 1px 1px 6px gray;
+    display: flex;
+    justify-content: space-between;
+
+    .details {
+margin-right: 10%;
+        height: 100%;
+        .new{
+            font-size: 0.7em;
+            font-weight: bold;
+            color: rgb(205, 133, 1);
+        }
+        .series{
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-top: -0.5em;
+            margin-bottom: 0em;
+        }
+        .name{
+            margin-top: 0em;
+            font-size: 0.7em;
+        }
+        .price{
+            margin-top: -0.5em;
+            font-size: 1em;
+            font-weight: bold;
+            font: stretch 1px;;
+            .priceAsNumber{
+                font-size: 2em;
+            }
+        }
+    }
+
+
+    button {
+        background: none;
+        border: none;
+        border-right: 1px rgb(185, 185, 185) solid;
+        font-weight: bold;
+    }
+}

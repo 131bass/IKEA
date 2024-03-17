@@ -1,8 +1,11 @@
-import React from 'react'
-
+import Spot from "../../components/spot/Spot"
+import "./home.scss"
 const Home = () => {
   return (
-    <div>Home</div>
+    <div >
+      <Spot product={{name:"משהו", price:56, isNew:true, series:"DAKSJUS", priceOf:"3 יח'"}}/>
+      Home</div>
+
   )
 }
 
