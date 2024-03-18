@@ -1,12 +1,55 @@
-.login{
+.login {
     margin-right: 10%;
-    width: 85%;
+    width: 80%;
     display: flex;
     justify-content: space-between;
-    // margin-left: 10%;
 
-    form{
-        display: flex;
-        flex-direction: column;
+    .text {
+        width: 40%;
+    }
+
+    .form {
+        width: 50%;
+
+        form {
+            display: flex;
+            flex-direction: column;
+
+            label {
+                margin-top: 1.5em;
+                margin-bottom: 0.3em;
+            }
+
+            input {
+                height: 2em;
+                font-size: 1.2em;
+            }
+
+            .forgotPassword {
+                margin-top: 1em;
+                margin-bottom: 2em;
+                color: black;
+            }
+
+            button {
+                background: none;
+                height: 4em;
+                margin-bottom: 1em;
+                border-radius: 2em;
+                &.submit{
+                    background-color: black;
+                    color: white;
+                    font-weight: bold;
+                }
+                &.toRegister{
+                    a{
+                        font-weight: bold;
+                        color: black;
+                        text-decoration-line: none;
+                    }
+                }
+            }
+
+        }
     }
 }

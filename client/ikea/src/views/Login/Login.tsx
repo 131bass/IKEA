@@ -8,13 +8,13 @@ const Login = () => {
 
   return (
     <div className="login">
-      <div>
-        <h1>היכנסו לחשבון איקאה שלכם</h1>
+      <div className="text">
+        <h2>היכנסו לחשבון איקאה שלכם</h2>
         <p>תוכלו ליהנות מחוויה אישית יותר, שבה לא תצטרכו למלא את הפרטים בכל פעם מחדש</p>
       </div>
-      <div>
+      <div className="form">
         <form onSubmit={login}>
-          <h3>היכנסו לחשבונכם או צרו חשבון עוד היום כדי ליהנות מחוויה אישית יותר</h3>
+          <h4>היכנסו לחשבונכם או צרו חשבון עוד היום כדי ליהנות מחוויה אישית יותר</h4>
 
           <label htmlFor="email">דוא"ל (שם משתמש)</label>
           <input type="email" name="email" id="email" value={user.email} required
@@ -30,9 +30,9 @@ const Login = () => {
               setUser({ ...user, password: (ev.target as HTMLInputElement).value }
               )
             }} />
-          <Link to={""}>שכחתם את הסיסמה?</Link>
-          <button type="submit">כניסה</button>
-          <button><Link to="/register">צרו חשבון</Link></button>
+          <Link to={""} className="forgotPassword">שכחתם את הסיסמה?</Link>
+          <button type="submit" className="submit">כניסה</button>
+          <button className="toRegister"><Link to="/register">צרו חשבון</Link></button>
         </form>
       </div>
     </div>

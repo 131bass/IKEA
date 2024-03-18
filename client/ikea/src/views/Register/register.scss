@@ -1,12 +1,73 @@
-.register{
+.register {
     margin-right: 10%;
-    width: 85%;
+    width: 80%;
     display: flex;
     justify-content: space-between;
-    // margin-left: 10%;
 
-    form{
-        display: flex;
-        flex-direction: column;
+    .text {
+        width: 40%;
+    }
+
+    .toLogin {
+        a {
+
+            color: black
+        }
+    }
+
+    .form {
+        width: 50%;
+
+        form {
+            display: flex;
+            flex-direction: column;
+
+            label {
+                margin-top: 1.5em;
+                margin-bottom: 0.3em;
+            }
+
+            input {
+                height: 2em;
+                font-size: 1.2em;
+            }
+
+            .checkPrivate {
+                margin-top: 2em;
+                margin-bottom: 1em;
+                display: flex;
+                align-items: center;
+
+                input[type=checkbox] {
+                    transform: scale(2);
+                    cursor: pointer;
+                }
+
+                label {
+                    height: 40px;
+                    margin-right: 10px;
+                    font-size: small;
+                    display: flex;
+                    text-align: center;
+
+                    a {
+                        color: black;
+                    }
+                }
+            }
+
+            button {
+                background: none;
+                height: 4em;
+                margin-bottom: 1em;
+                border-radius: 2em;
+
+                background-color: black;
+                color: white;
+                font-weight: bold;
+
+            }
+
+        }
     }
 }

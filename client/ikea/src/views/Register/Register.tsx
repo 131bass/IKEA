@@ -5,16 +5,16 @@ import { useRegister } from "./registerHooks"
 
 const Register = () => {
 
-const { user, setUser, handleRegister } = useRegister()
+    const { user, setUser, handleRegister } = useRegister()
     return (
         <div className="register">
-            <div>
+            <div className="text">
                 <h1>צרו חשבון איקאה</h1>
-                <p>כבר יש לכם חשבון? <Link to="/login">היכנסו כאן</Link></p>
+                <p className="toLogin">כבר יש לכם חשבון? <Link to="/login">היכנסו כאן</Link></p>
             </div>
-            <div>
+            <div className="form">
                 <form onSubmit={handleRegister}>
-                    <h3>צרו פינה נעימה משלכם באיקאה. <br /> כבר ציינו שההצטרפות בחינם?</h3>
+                    <h4>צרו פינה נעימה משלכם באיקאה. <br /> כבר ציינו שההצטרפות בחינם?</h4>
 
                     <label htmlFor="firstName">שם פרטי</label>
                     <input type="text" name="firstName" id="firstName" value={user.firstName} required
@@ -50,8 +50,7 @@ const { user, setUser, handleRegister } = useRegister()
                             setUser({ ...user, password: (ev.target as HTMLInputElement).value }
                             )
                         }} />
-                    <div>
-
+                    <div className="checkPrivate">
                         <input type="checkbox" name="checkPrivate" id="checkPrivate" required />
                         <label htmlFor="checkPrivate">ידוע לי כי המידע אודותיי ישמר במערכות החברה בכפוף ל<span><a href="">מדיניות הפרטיות</a></span></label>
                     </div>
