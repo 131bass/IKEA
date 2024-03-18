@@ -11,7 +11,7 @@ export const useLogin = () => {
         try {
             ev.preventDefault()
             const { data } = await axios.post("/api/users/login", { email: user.email, password: user.password })
-            console.log(data)
+            console.log(data);
         } catch (error) {
             console.error(error)
         }
