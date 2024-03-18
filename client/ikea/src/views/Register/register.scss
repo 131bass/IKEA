@@ -1,0 +1,12 @@
+.register{
+    margin-right: 10%;
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+    // margin-left: 10%;
+
+    form{
+        display: flex;
+        flex-direction: column;
+    }
+}

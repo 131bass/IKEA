@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import categoriesArr, { CategoriesTypeArr, CategoryType } from '../../utils/categories';
+import { CategoriesTypeArr } from '../../types/category';
+import categoriesArr from '../../utils/categories';
 
 
 export const useGetSearch = () => {
