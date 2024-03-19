@@ -3,7 +3,19 @@
     width: 80%;
     display: flex;
     justify-content: space-between;
-
+&.sideBar{
+    display: block;
+    
+    font-size: small;
+    width: 100%;
+    // background-color: white;
+    .form{
+        width: 80%;
+    }
+    .text{
+        width: 80%;
+    }
+}
     .text {
         width: 40%;
     }
@@ -43,10 +55,14 @@
                     cursor: pointer;
                 }
                 &.toRegister{
+                    cursor: pointer;
+
                     a{
                         font-weight: bold;
                         color: black;
                         text-decoration-line: none;
+                       
+
                     }
                 }
             }

@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom"
 import "./register.scss"
 import { useRegister } from "./registerHooks"
+import { useShowSideBar } from "../../components/NavBar/navBarHooks"
+import { useEffect } from "react"
 
 
 const Register = () => {
 
     const { user, setUser, handleRegister } = useRegister()
+
     return (
         <div className="register">
             <div className="text">

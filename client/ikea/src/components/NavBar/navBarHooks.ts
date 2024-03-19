@@ -3,6 +3,15 @@ import { CategoriesTypeArr } from '../../types/category';
 import categoriesArr from '../../utils/categories';
 
 
+export const useShowSideBar=()=>{
+    const [visiable, setVisiable] = useState(false)
+    const changeSideBarVisiable = ()=>{
+        setVisiable(!visiable)
+    }
+
+    return {visiable,changeSideBarVisiable}
+}
+
 export const useGetSearch = () => {
     const [search, setSearch] = useState('')
     const getSearch = (text: string) => {
