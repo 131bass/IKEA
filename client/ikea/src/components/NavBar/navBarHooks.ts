@@ -3,13 +3,13 @@ import { CategoriesTypeArr } from '../../types/category';
 import categoriesArr from '../../utils/categories';
 
 
-export const useShowSideBar=()=>{
-    const [visiable, setVisiable] = useState(false)
-    const changeSideBarVisiable = ()=>{
-        setVisiable(!visiable)
+export const useShowSideBar = () => {
+    const [sideBarVisiable, setSsideBarVisiable] = useState(false)
+    const changeSideBarVisiable = () => {
+        setSsideBarVisiable(!sideBarVisiable)
     }
 
-    return {visiable,changeSideBarVisiable}
+    return { sideBarVisiable, changeSideBarVisiable }
 }
 
 export const useGetSearch = () => {
@@ -34,6 +34,19 @@ export const useRenderNav = () => {
     }
     return { arrToRender, showCategories }
 }
+
+export const useRenderSubCategories = () => {
+    const [subCatArr, setSubCatArr] = useState<string[]>()
+    const [subCatVisiable, setSubCatVisiable] = useState<boolean>(false)
+
+    const showSubCategories = (subCategoriArr: string[]) => {
+        setSubCatArr(subCategoriArr)
+        setSubCatVisiable(!subCatVisiable)
+    }
+
+    return {subCatArr,subCatVisiable,setSubCatVisiable,showSubCategories}
+}
+
 
 export const useScrollBar = () => {
     const [scroll, setScroll] = useState(0)

@@ -42,7 +42,7 @@ export async function login(req, res) {
     try {
 
         const { email, password } = req.body;
-        if (!email || !password) throw new Error("Couldn't get all fields from req.body");
+        if (!email || !password) throw new Error("Couldn't get all fields of user from req.body");
 
         const userDB = await UserModel.findOne({ email });
         if (!userDB) throw new Error("User with that email can't be found")

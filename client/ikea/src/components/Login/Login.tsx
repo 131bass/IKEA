@@ -1,8 +1,8 @@
+import { FC } from "react"
 import { Link } from "react-router-dom"
+import { useShowSideBar } from "../NavBar/navBarHooks"
 import "./login.scss"
 import { useLogin } from "./loginHooks"
-import { FC } from "react"
-import { useShowSideBar } from "../NavBar/navBarHooks"
 
 
 export enum LoginMode {

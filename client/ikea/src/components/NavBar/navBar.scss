@@ -6,6 +6,7 @@
     background-color: rgba(141, 141, 141, 0.5);
     z-index: 2;
     transition: all 0.2s;
+
     .formLogin {
         padding-top: 2%;
         position: absolute;
@@ -14,18 +15,19 @@
         border-radius: 0px 15px 15px 0px;
         width: 35%;
         height: 96%;
-        
-        img{
-            position:absolute;
+
+        img {
+            position: absolute;
             left: 10px;
-            width:25px ;
+            width: 25px;
             cursor: pointer;
             border-radius: 50%;
             padding: 5px;
-            &:hover{
+
+            &:hover {
                 background-color: rgb(224, 223, 223);
             }
-            
+
         }
     }
 
@@ -34,6 +36,31 @@
 nav {
     width: 90vw;
     margin-right: 10%;
+
+    .subCategories {
+        position: absolute;
+        font-size: small;
+        padding: 30px;
+        background-color: white;
+        gap: 40px;
+        width: fit-content;
+        height: fit-content;
+        border: 1px solid gray;
+        border-radius: 15px;
+        box-shadow: 1px 1px 3px gray;
+        display: block;
+        a{
+            color: black;
+            text-decoration-line: none;
+            &:hover{
+                text-decoration-line: underline;
+            }
+        }
+
+        &.hide {
+            display: none;
+        }
+    }
 
 }
 
@@ -72,7 +99,7 @@ nav {
         width: 2.8em;
         align-self: center;
 
-        &:active{
+        &:active {
             background-color: #b1b1b1;
 
         }
@@ -174,12 +201,15 @@ nav {
             width: 1.5em;
         }
 
-        .link:active {
-            border-bottom: 3px solid rgb(0, 0, 152);
-            color: black;
-            padding: 0 0 1em 0;
-            margin-bottom: -1.1em;
+        .link {
 
+            &.action {
+                border-bottom: 3px solid rgb(0, 0, 152);
+                color: black;
+                padding: 0 0 1em 0;
+                margin-bottom: -1.1em;
+
+            }
 
         }
 
@@ -271,8 +301,11 @@ nav {
 
                 img {
                     height: 80px;
-                }
 
+                    &.blur {
+                        opacity: 0.3;
+                    }
+                }
             }
         }
     }

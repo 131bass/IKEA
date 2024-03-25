@@ -1,15 +1,14 @@
 import { useEffect } from "react"
 import { Link } from 'react-router-dom'
-import cameraIcon from './images/camera.png'
-import heartIcon from './images/heart.png'
-import productsIcon from './images/products.png'
-import profileIcon from './images/profile.png'
-import roomsIcon from './images/rooms.png'
-import searchIcon from './images/search.png'
-import cancelIcon from './images/cancel.png'
-import "./navBar.scss"
-import { useGetSearch, useRenderNav, useScrollBar, useShowSideBar } from './navBarHooks'
+import categoriesArr from "../../utils/categories"
 import Login, { LoginMode } from "../Login/Login"
+import cameraIcon from './images/camera.png'
+import cancelIcon from './images/cancel.png'
+import heartIcon from './images/heart.png'
+import profileIcon from './images/profile.png'
+import searchIcon from './images/search.png'
+import "./navBar.scss"
+import { useGetSearch, useRenderNav, useRenderSubCategories, useScrollBar, useShowSideBar } from './navBarHooks'
 
 const NavBar = () => {
 
@@ -19,26 +18,10 @@ const NavBar = () => {
 
     const { arrToRender, showCategories } = useRenderNav()
 
-    const { visiable, changeSideBarVisiable } = useShowSideBar()
+    const { sideBarVisiable, changeSideBarVisiable } = useShowSideBar()
 
-    const navLinksArr = [
-        {
-            name: "מוצרים",
-            imgURL: productsIcon
-        },
-        {
-            name: "חדרים",
-            imgURL: roomsIcon
-        },
-        { name: "מוצרים חדשים וקולקציות" },
-        { name: "השראה ורעיונות" },
-        { name: "תאום פגישות" },
-        { name: "שירות לקוחות" },
-        { name: "שעות פעילות" },
-        { name: "לאכול באיקאה" },
-        { name: "עוד" }
+    const { subCatArr, subCatVisiable, setSubCatVisiable, showSubCategories } = useRenderSubCategories()
 
-    ]
     useEffect(() => {
         showCategories("מוצרים")
     }, [])
@@ -46,7 +29,7 @@ const NavBar = () => {
 
     return (
         <>
-            {visiable ?
+            {sideBarVisiable ?
                 <div className="side">
                     <div className="formLogin">
                         <img src={cancelIcon} alt="cancel" onClick={changeSideBarVisiable} />
@@ -54,7 +37,9 @@ const NavBar = () => {
                     </div>
                 </div>
                 : null}
-            <nav>
+            <nav onClick={() => {
+
+            }}>
                 <div className="topNav">
                     <Link to="/">
                         <img src="https://www.ikea.com/il/he/static/ikea-logo.f7d9229f806b59ec64cb.svg" alt="ikea logo" />
@@ -69,19 +54,19 @@ const NavBar = () => {
                 </div>
                 <div className="navLinks">
                     <div className="links">
-                        {navLinksArr.map((link) => {
+                        {categoriesArr.map((element) => {
                             return (
-                                <div className="link">
-                                    {link.imgURL ?
-                                        <span onClick={() => { showCategories(link.name) }}>
-                                            <img src={link.imgURL} alt={link.name} />{link.name}</span>
+                                <div className={arrToRender.name == element.name ? "link action" : "link"} >
+                                    {element.imgURL ?
+                                        <span onClick={() => { showCategories(element.name) }}>
+                                            <img src={element.imgURL} alt={element.name} />{element.name}</span>
                                         :
-                                        <span onClick={() => { showCategories(link.name) }}>{link.name}</span>}
+                                        <span onClick={() => { showCategories(element.name) }}>{element.name}</span>}
                                 </div>
                             )
                         })}
                     </div>
-                    {arrToRender.withIMG ?
+                    {arrToRender.imgURL ?
                         <>
                             <div className="navCategoriesWrapper">
                                 <div className='arrowButtons'>
@@ -92,8 +77,13 @@ const NavBar = () => {
                                     {arrToRender.categories.map((item) => {
                                         return (
                                             <>
-                                                <div className='category'>
-                                                    <img src={item.imgURL} alt={item.name} />
+                                                <div className="category" onClick={() => {
+                                                    if (item.subCategories) {
+                                                        showSubCategories(item.subCategories)
+                                                    }
+
+                                                }} >
+                                                    <img className={item.subCategories != subCatArr && subCatVisiable ? "blur" : ""} src={item.imgURL} alt={item.name} />
                                                     <p>{item.name}</p>
                                                 </div>
                                             </>
@@ -119,6 +109,28 @@ const NavBar = () => {
                             </div>
                         </div>
                     }
+                </div>
+                <div className={subCatVisiable ? "subCategories" : "subCategories hide"} style={subCatArr && subCatArr.length > 10 ? { columnCount: "2" } : {}}>
+                    {subCatArr ?
+                        <>
+                            <h4 style={{ columnSpan: "all" }}>
+                                <Link to={`/category/${arrToRender.categories.find((catArr) => catArr.subCategories == subCatArr)?.name}`}>
+
+                                    <span>לכל קטגוריית </span>
+                                    {arrToRender.categories.find((catArr) => catArr.subCategories == subCatArr)?.name}
+                                </Link>
+                            </h4>
+                            {subCatArr.map((subCat) => {
+                                return (
+                                    <p onClick={() => {
+                                        setSubCatVisiable(false)
+                                    }}>
+                                        <Link to={`/category/${subCat}`}>{subCat}</Link>
+                                    </p>
+                                )
+                            })}
+                        </>
+                        : null}
                 </div>
 
             </nav>

@@ -6,7 +6,8 @@ right: 20%;
             display: flex;
             position: absolute;
             left: 100%;
-            top: -7em
+            top: -7em;
+            z-index: 3;
         }
     }
 }

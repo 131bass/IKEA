@@ -22,6 +22,11 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  isAdmin: {
+    type: Boolean,
+    required: true,
+    default: false
   }
 });
 
@@ -31,8 +36,8 @@ const UserModel = model("users", UserSchema)
 export default UserModel;
 
 export const UserValidation = Joi.object({
-  firstName: Joi.string().alphanum().min(3).max(16).required(),
-  lastName: Joi.string().alphanum().min(3).max(16).required(),
+  firstName: Joi.string().alphanum().min(2).max(16).required(),
+  lastName: Joi.string().alphanum().min(2).max(16).required(),
   email: Joi.string().email().required(),
   password: joiPassword
     .string()

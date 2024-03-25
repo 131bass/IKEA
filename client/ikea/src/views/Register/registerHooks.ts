@@ -1,11 +1,12 @@
 import axios from "axios"
 import { useState } from "react"
+import { User } from "../../types/user"
 
 
 export const useRegister = () => {
 
     const initialState = { firstName: "", lastName: "", email: "", phoneNumber: "", password: "" }
-    const [user, setUser] = useState(initialState)
+    const [user, setUser] = useState<User>(initialState)
 
     const handleRegister = async (ev: React.FormEvent<HTMLFormElement>) => {
         try {

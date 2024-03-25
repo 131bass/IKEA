@@ -1,0 +1,36 @@
+import { FC, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Product } from '../../types/product'
+import fullHeartIcon from '../NavBar/images/fullHeart.png'
+import heartIcon from '../NavBar/images/heart.png'
+import './productCard.scss'
+import { useProductCard } from './productCardHooks'
+
+interface ProductCardProps {
+    product: Product
+}
+const ProductCard: FC<ProductCardProps> = ({ product }) => {
+
+    const navigate = useNavigate()
+const  { bgImg, setBgImg, isFavourite, changeFavourite } = useProductCard()
+
+useEffect(()=>{
+    setBgImg(product.imgUrl)
+},[])
+    return (
+        <div style={{display:"block"}}>
+        <div onMouseDown={() => {
+            navigate(`/product/:${product.itemNumber}`)
+        }} style={{width:"100%", height:"500px"}}>
+            <div className='productImg' onMouseEnter={() => { setBgImg(product.imgUrlView) }} onMouseLeave={() => { setBgImg(product.imgUrl) }} style={{ backgroundImage: `url(${bgImg})` , backgroundSize:"contain",backgroundRepeat:"no-repeat", width:"100%", height:"50%",  transition:"all 0.4s"}}></div>
+            {product.isNew ? <p>חדש</p> : null}
+            <h4>{product.series}</h4>
+            <p>{product.name}</p>
+            <h2>&#8362;{product.price}</h2>
+        </div>
+            <div onClick={changeFavourite} style={isFavourite?{backgroundImage:`url(${fullHeartIcon})`, width:"50px", height:"50px",backgroundRepeat:"no-repeat"}:{backgroundImage:`url(${heartIcon})`, width:"50px", height:"50px",backgroundRepeat:"no-repeat"}}></div>
+            </div>
+    )
+}
+
+export default ProductCard

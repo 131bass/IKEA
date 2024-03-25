@@ -1,21 +1,15 @@
 import { FC } from "react";
 import "./spot.scss"
 
-enum TagSide {
-    RIGHT = "right",
-    LEFT = "left",
-    TOP = "top",
-    BOTTOM = "bottom"
-}
+
 
 interface SpotProps {
     // product:Product
     product: any;
-    tagSide?: TagSide
 }
 
 
-const Spot: FC<SpotProps> = ({ product, tagSide }) => {
+const Spot: FC<SpotProps> = ({ product }) => {
 
 
     return (

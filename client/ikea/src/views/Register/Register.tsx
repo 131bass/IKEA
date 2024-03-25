@@ -9,6 +9,8 @@ const Register = () => {
 
     const { user, setUser, handleRegister } = useRegister()
 
+
+    
     return (
         <div className="register">
             <div className="text">

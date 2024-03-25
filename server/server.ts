@@ -24,6 +24,8 @@ mongoose
 
 import usersRoutes from "./API/users/userRoutes";
 app.use("/api/users", usersRoutes);
+import productsRoutes from "./API/products/productRoutes";
+app.use("/api/products", productsRoutes);
 
 app.listen(PORT, () => {
     console.log(`server is active on port : ${PORT}`);
