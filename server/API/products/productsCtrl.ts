@@ -40,11 +40,32 @@ export async function getAllProducts(req, res) {
     }
 }
 
-export async function getProductsByCategory(req,res){
+export async function getProductsBySubCategory(req,res){
     try {
-        const {subcat} = req.query
-        const categoryProducts = await ProductModel.find({subCategory:subcat})
+        const {subCategory} = req.query
+        const categoryProducts = await ProductModel.find({subCategory})
         res.send({products:categoryProducts})
+    } catch (error) {
+        res.send({ error: error.message });
+        
+    }
+}
+
+export async function getProduct(req,res){
+    try {
+        const {itemNumber} = req.query
+        const product = await ProductModel.findOne({itemNumber})
+        res.send({product})
+    } catch (error) {
+        res.send({ error: error.message });
+        
+    }
+}
+export async function getProductsByName(req,res){
+    try {
+        const {name} = req.query
+        const products = await ProductModel.find({name:{"$regex":`${name}`}})
+        res.send({products})
     } catch (error) {
         res.send({ error: error.message });
         

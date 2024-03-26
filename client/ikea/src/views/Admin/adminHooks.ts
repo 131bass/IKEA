@@ -16,7 +16,7 @@ export const useGetAllProducts = () => {
             console.error(error)
         }
     }
-    return { handleGetAllProducts }
+    return {products, handleGetAllProducts }
 
 }
 

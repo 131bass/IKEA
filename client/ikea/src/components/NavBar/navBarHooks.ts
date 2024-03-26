@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { CategoriesTypeArr } from '../../types/category';
 import categoriesArr from '../../utils/categories';
+import { Product } from '../../types/product';
+import axios from 'axios';
 
 
 export const useShowSideBar = () => {
@@ -14,10 +16,7 @@ export const useShowSideBar = () => {
 
 export const useGetSearch = () => {
     const [search, setSearch] = useState('')
-    const getSearch = (text: string) => {
-        setSearch(text)
-    }
-    return { search, getSearch }
+    return { search, setSearch }
 }
 
 
@@ -62,4 +61,22 @@ export const useScrollBar = () => {
         }
     }
     return { backward, forward, scroll }
+}
+
+
+export const useGetProductsByName = () => {
+
+    const [productsOfSearch, setProductsOfSearch] = useState<Product[]>()
+
+    const handleGetProductsByName = async (searchText: string) => {
+        try {
+            console.log(searchText)
+            const { data } = await axios.get(`/api/products/getProductsByName?name=${searchText}`)
+            console.log(data.products)
+            setProductsOfSearch(data.products)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    return { productsOfSearch, handleGetProductsByName }
 }

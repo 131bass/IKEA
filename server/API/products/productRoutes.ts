@@ -1,13 +1,15 @@
 import express from 'express';
-import { addProduct, deleteProduct, getAllProducts, getProductsByCategory } from './productsCtrl';
+import { addProduct, deleteProduct, getAllProducts, getProduct, getProductsByName, getProductsBySubCategory } from './productsCtrl';
 
 
 
 const router = express.Router();
 
 router
-.get("/getAllProducts",getAllProducts)
-.get("/getProductsByCategory",getProductsByCategory)
+  .get("/getAllProducts", getAllProducts)
+  .get("/getProductsBySubCategory", getProductsBySubCategory)
+  .get("/getProduct", getProduct)
+  .get("/getProductsByName", getProductsByName)
   .post("/addProduct", addProduct)
   .delete("/deleteProduct", deleteProduct)
 

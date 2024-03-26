@@ -4,19 +4,19 @@ import { Product } from "../../types/product"
 
 
 
-export const getProductsByCategory = () => {
+export const useGetProductsBySubCategory = () => {
 
     const [products, setProducts] = useState<Product[]>()
 
-    const handleGetCategoryProducts = async (subcategory: string) => {
+    const handleGetSubCategoryProducts = async (subcategory: string) => {
         try {
-            const { data } = await axios.get(`/api/products/getProductsByCategory?subcat=${subcategory}`)
+            const { data } = await axios.get(`/api/products/getProductsBySubCategory?subCategory=${subcategory}`)
             setProducts(data.products)
         } catch (error) {
             console.error(error)
         }
     }
-    return { products, handleGetCategoryProducts }
+    return { products, handleGetSubCategoryProducts }
 }
 
 

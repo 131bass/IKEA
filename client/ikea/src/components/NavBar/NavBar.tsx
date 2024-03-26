@@ -1,5 +1,5 @@
-import { useEffect } from "react"
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from "react"
+import { Link, useNavigate } from 'react-router-dom'
 import categoriesArr from "../../utils/categories"
 import Login, { LoginMode } from "../Login/Login"
 import cameraIcon from './images/camera.png'
@@ -8,13 +8,13 @@ import heartIcon from './images/heart.png'
 import profileIcon from './images/profile.png'
 import searchIcon from './images/search.png'
 import "./navBar.scss"
-import { useGetSearch, useRenderNav, useRenderSubCategories, useScrollBar, useShowSideBar } from './navBarHooks'
+import { useGetProductsByName, useGetSearch, useRenderNav, useRenderSubCategories, useScrollBar, useShowSideBar } from './navBarHooks'
 
 const NavBar = () => {
 
     const { backward, forward, scroll } = useScrollBar()
 
-    const { search, getSearch } = useGetSearch()
+    const { search, setSearch } = useGetSearch()
 
     const { arrToRender, showCategories } = useRenderNav()
 
@@ -22,10 +22,20 @@ const NavBar = () => {
 
     const { subCatArr, subCatVisiable, setSubCatVisiable, showSubCategories } = useRenderSubCategories()
 
+    const { productsOfSearch, handleGetProductsByName } = useGetProductsByName()
+
+    const [showSearchBox, setShowSearchBox] = useState(false)
+
+    const navigate = useNavigate()
+
     useEffect(() => {
         showCategories("מוצרים")
     }, [])
 
+    useEffect(() => {
+        const searchRequest = setTimeout(() => { handleGetProductsByName(search) }, 1500);
+        return () => clearTimeout(searchRequest);
+    }, [search]);
 
     return (
         <>
@@ -44,10 +54,32 @@ const NavBar = () => {
                     <Link to="/">
                         <img src="https://www.ikea.com/il/he/static/ikea-logo.f7d9229f806b59ec64cb.svg" alt="ikea logo" />
                     </Link>
-                    <div className="navSearchBox">
+                    <div className={!showSearchBox ? "navSearchBox" : "navSearchBox open"}>
                         <img src={searchIcon} alt="search" />
-                        <input type="text" name='navSearch' id='navSearch' value={search} placeholder='מה לחפש לך?' onInput={(ev) => { getSearch((ev.target as HTMLInputElement).value) }} />
+                        <input type="text" name='navSearch' id='navSearch' value={search} placeholder='מה לחפש לך?' onClick={() => { setShowSearchBox(!showSearchBox) }} onInput={(ev) => {
+                            setSearch((ev.target as HTMLInputElement).value)
+                        }} />
                         <button><img src={cameraIcon} alt="camera" /></button>
+                        {showSearchBox ?
+                            <div style={{ backgroundColor: "white", paddingRight: "20px", width: "46%", height: "450px", position: "absolute", top: "100px", zIndex: "3", border: "3px solid red", borderRadius: "10px", overflow:"auto",cursor:"default" }}>
+                                {productsOfSearch && productsOfSearch.length > 0 ?
+                                    productsOfSearch.map((product) => {
+                                        return (
+                                            <div onClick={() => {
+                                                navigate(`/product/${product.itemNumber}`)
+                                                setShowSearchBox(false)
+                                                setSearch('')
+                                            }} style={{ display: "flex", height: "55px", gap: "20px", margin: "20px", alignContent: "center" ,cursor:"pointer"}}>
+                                                <div style={{ width: "50px", height: "50px", backgroundImage: `url(${product.imgUrl})`, backgroundSize: "contain" }}></div>
+                                                <div style={{ height: "50px" }}>
+                                                    <h5 style={{ marginBottom: "0px", marginTop: "0px" }}>{product.series}</h5>
+                                                    <p style={{ marginBottom: "0px", marginTop: "0px" }}>{product.name}</p>
+                                                </div>
+                                            </div>
+                                        )
+                                    }) : <p>לא נמצאו תוצאות מתאימות</p>}
+                            </div>
+                            : null}
                     </div>
                     <button className="loginOrRegister" onClick={changeSideBarVisiable} ><span><img src={profileIcon} alt="profile" /> </span>היי! התחברו או הירשמו</button>
                     <button className='addToWishList'><Link to="/favourites"><img src={heartIcon} alt="heart" /></Link></button>
@@ -125,7 +157,7 @@ const NavBar = () => {
                                     <p onClick={() => {
                                         setSubCatVisiable(false)
                                     }}>
-                                        <Link to={`/category/${subCat}`}>{subCat}</Link>
+                                        <Link to={`/subcategory/${subCat}`}>{subCat}</Link>
                                     </p>
                                 )
                             })}

@@ -49,10 +49,13 @@ nav {
         border-radius: 15px;
         box-shadow: 1px 1px 3px gray;
         display: block;
-        a{
+        z-index: 3;
+
+        a {
             color: black;
             text-decoration-line: none;
-            &:hover{
+
+            &:hover {
                 text-decoration-line: underline;
             }
         }
@@ -68,11 +71,15 @@ nav {
     width: 95%;
     display: flex;
     margin-top: 5%;
-    gap: 15px;
+    gap: 25px;
+
+    a {
+        align-self: center;
+    }
 
     img {
         height: 2.25em;
-        align-self: center;
+        align-content: center;
     }
 
     .loginOrRegister {
@@ -122,20 +129,25 @@ nav {
         gap: 10px;
         justify-content: space-around;
         padding: 0px 15px;
-
         img {
             width: 1.7em;
             height: 1.7em;
-
+            
         }
-
-
-
+        
         &:hover {
             background-color: #dbd9d9;
             cursor: text;
         }
-
+        &.open{
+            border: 2px solid navy;
+            background-color: white;
+            
+            &:hover {
+                // background-color: white;
+                cursor: text;
+            }
+        }
         input {
             border: none;
             background: none;
