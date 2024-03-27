@@ -1,6 +1,7 @@
+import axios from 'axios'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useGetProductByItemNumber } from './productPageHooks'
-import { useEffect, useState } from 'react'
 
 const ProductPage = () => {
 
@@ -8,12 +9,23 @@ const ProductPage = () => {
 
   const { product, handleGetProduct } = useGetProductByItemNumber()
 
+  const handleDeleteProduct = async () => {
+    try {
+      if (product) {
+       const productID = product._id
+        const { data } = await axios.delete(`api/products/?id=${productID}`)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   useEffect(() => {
     if (itemNumber)
       handleGetProduct(itemNumber)
   }, [product])
   return (
-  
+
 
     <div style={{ width: "90%", marginRight: "10%", marginTop: "5%" }}>
       <div style={{ display: "flex" }}>
@@ -25,6 +37,9 @@ const ProductPage = () => {
           <h4>{product?.series}</h4>
           <p>{product?.name}</p>
           <h2>&#8362;{product?.price}</h2>
+          <button onClick={() => {
+handleDeleteProduct()
+          }}>מחק מוצר</button>
         </div>
       </div>
       <div style={{ width: "60%" }}>

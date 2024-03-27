@@ -11,6 +11,6 @@ router
   .get("/getProduct", getProduct)
   .get("/getProductsByName", getProductsByName)
   .post("/addProduct", addProduct)
-  .delete("/deleteProduct", deleteProduct)
+  .delete("/", deleteProduct)
 
 export default router;

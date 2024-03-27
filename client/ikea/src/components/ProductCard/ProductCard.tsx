@@ -21,14 +21,14 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         <div style={{ display: "block", borderBottom: "1px solid gray", width: "280px" }}>
             <div onMouseDown={() => {
                 navigate(`/product/${product.itemNumber}`)
-            }} style={{ width: "250px", height: "500px" }}>
-                <div className='productImg' onMouseEnter={() => { setBgImg(product.imgUrlView) }} onMouseLeave={() => { setBgImg(product.imgUrl) }} style={{ backgroundImage: `url(${bgImg})`, backgroundSize: "contain", backgroundRepeat: "no-repeat", backgroundPosition: "right", width: "90%", height: "50%", transition: "all 0.4s" }}></div>
+            }} style={{ width: "250px", height: "400px" }}>
+                <div className='productImg' onMouseEnter={() => { setBgImg(product.imgUrlView) }} onMouseLeave={() => { setBgImg(product.imgUrl) }} style={{ backgroundImage: `url(${bgImg})`, backgroundSize: "contain", backgroundRepeat: "no-repeat", backgroundPosition: "right", width: "90%", height: "60%", transition: "all 0.4s" }}></div>
                 {product.isNew ? <p style={{ marginBottom: "-20px", fontSize: "0.7em", fontWeight: "bold", color: "rgb(205, 133, 1)" }}>חדש</p> : null}
                 <h4 style={{ marginBottom: "-10px" }}>{product.series}</h4>
                 <p>{product.name}</p>
                 <h2>&#8362;{product.price}</h2>
             </div>
-            <div onClick={changeFavourite} style={isFavourite ? { backgroundImage: `url(${fullHeartIcon})`, width: "50px", height: "50px", backgroundRepeat: "no-repeat" } : { backgroundImage: `url(${heartIcon})`, width: "50px", height: "50px", backgroundRepeat: "no-repeat" }}></div>
+            <div onClick={changeFavourite} style={isFavourite ? { backgroundImage: `url(${fullHeartIcon})`, width: "50px", height: "50px", backgroundRepeat: "no-repeat", backgroundSize:"60%" } : { backgroundImage: `url(${heartIcon})`, width: "50px", height: "50px", backgroundRepeat: "no-repeat", backgroundSize:"60%"  }}></div>
         </div>
     )
 }
