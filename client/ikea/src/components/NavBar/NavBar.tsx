@@ -9,6 +9,8 @@ import profileIcon from './images/profile.png'
 import searchIcon from './images/search.png'
 import "./navBar.scss"
 import { useGetProductsByName, useGetSearch, useRenderNav, useRenderSubCategories, useScrollBar, useShowSideBar } from './navBarHooks'
+import { useAppSelector } from "../../app/hooks"
+import { userLoggedInSelector } from "../../features/loggedInUser/userSlice"
 
 const NavBar = () => {
 
@@ -26,7 +28,12 @@ const NavBar = () => {
 
     const [showSearchBox, setShowSearchBox] = useState(false)
 
+    const [searching, setSearching] = useState(false)
+
     const navigate = useNavigate()
+
+    const user = useAppSelector(userLoggedInSelector)
+
 
     useEffect(() => {
         showCategories("מוצרים")
@@ -55,13 +62,14 @@ const NavBar = () => {
                         <img src="https://www.ikea.com/il/he/static/ikea-logo.f7d9229f806b59ec64cb.svg" alt="ikea logo" />
                     </Link>
                     <div className={!showSearchBox ? "navSearchBox" : "navSearchBox open"}>
-                        <img src={searchIcon} alt="search" />
+                        {searching && search ? null : <img src={searchIcon} alt="search" />}
                         <input type="text" name='navSearch' id='navSearch' value={search} placeholder='מה לחפש לך?' onClick={() => { setShowSearchBox(!showSearchBox) }} onInput={(ev) => {
                             setSearch((ev.target as HTMLInputElement).value)
+                            setSearching(true)
                         }} />
-                        <button><img src={cameraIcon} alt="camera" /></button>
+                        {searching && search ? <><button><img style={{ width: "15px", height: "15px" }} src={cancelIcon} /></button><button><img style={{ paddingRight: "10px", borderRight: "1px solid gray" }} src={searchIcon} /></button></> : <button><img src={cameraIcon} /></button>}
                         {showSearchBox ?
-                            <div style={{ backgroundColor: "white", paddingRight: "20px", width: "46%", height: "450px", position: "absolute", top: "100px", zIndex: "3", border: "3px solid red", borderRadius: "10px", overflow:"auto",cursor:"default" }}>
+                            <div style={{ backgroundColor: "white", paddingRight: "20px", width: "46%", height: "450px", position: "absolute", top: "100px", zIndex: "3", border: "2px solid grey", borderRadius: "10px", overflow: "auto", cursor: "default" }}>
                                 {productsOfSearch && productsOfSearch.length > 0 ?
                                     productsOfSearch.map((product) => {
                                         return (
@@ -69,7 +77,7 @@ const NavBar = () => {
                                                 navigate(`/product/${product.itemNumber}`)
                                                 setShowSearchBox(false)
                                                 setSearch('')
-                                            }} style={{ display: "flex", height: "55px", gap: "20px", margin: "20px", alignContent: "center" ,cursor:"pointer"}}>
+                                            }} style={{ display: "flex", height: "55px", gap: "20px", margin: "20px", alignContent: "center", cursor: "pointer" }}>
                                                 <div style={{ width: "50px", height: "50px", backgroundImage: `url(${product.imgUrl})`, backgroundSize: "contain" }}></div>
                                                 <div style={{ height: "50px" }}>
                                                     <h5 style={{ marginBottom: "0px", marginTop: "0px" }}>{product.series}</h5>
@@ -81,7 +89,11 @@ const NavBar = () => {
                             </div>
                             : null}
                     </div>
-                    <button className="loginOrRegister" onClick={changeSideBarVisiable} ><span><img src={profileIcon} alt="profile" /> </span>היי! התחברו או הירשמו</button>
+                    {!user.email ?
+                        <button className="loginOrRegister" onClick={changeSideBarVisiable} ><span><img src={profileIcon} alt="profile" /> </span>היי! התחברו או הירשמו</button>
+                        :
+                        <button style={{backgroundColor:"black", color:"white", width:"40px", fontWeight:"bold"}} className="loginOrRegister" onClick={() => { navigate('/profile') }} >{user.firstName.charAt(0)+" "+user.lastName.charAt(0)}</button>
+                    }
                     <button className='addToWishList'><Link to="/favourites"><img src={heartIcon} alt="heart" /></Link></button>
                 </div>
                 <div className="navLinks">

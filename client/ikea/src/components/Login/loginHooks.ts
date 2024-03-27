@@ -1,6 +1,8 @@
 import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useAppDispatch } from "../../app/hooks"
+import { setUserLoggedIn } from "../../features/loggedInUser/userSlice"
 
 
 export const useLogin = () => {
@@ -8,12 +10,15 @@ export const useLogin = () => {
     const [user, setUser] = useState(initialState)
 
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
+
     const login = async (ev: React.FormEvent<HTMLFormElement>) => {
         try {
             ev.preventDefault()
             const { data } = await axios.post("/api/users/login", { email: user.email, password: user.password })
             console.log(data);
-            navigate(`/profile/:${data.userDB._id}`)
+            dispatch(setUserLoggedIn(data.userDB))
+            navigate(`/profile`)
         } catch (error) {
             console.error(error)
         }
@@ -21,3 +26,5 @@ export const useLogin = () => {
 
     return { user, setUser, login }
 }
+
+// setUserLoggedIn

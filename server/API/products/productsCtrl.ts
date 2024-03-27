@@ -18,11 +18,21 @@ export async function addProduct(req, res) {
 
 export async function deleteProduct(req, res) {
     try {
-        console.log("start")
-        const { id } = req.query;
-        if (!id) throw new Error("Couldn't get all fields from req.body");
-        console.log(id)
+        const { id } = req.params;
+        if (!id) throw new Error("Couldn't get all fields from req.req.params at function deleteProduct");
         const productsDB = await ProductModel.findByIdAndDelete(id);
+        res.send({ productsDB });
+    } catch (error) {
+        res.send({ error: error.message });
+    }
+}
+export async function updatePrice(req, res) {
+    try {
+        const { id } = req.params;
+        if (!id) throw new Error("Couldn't get all fields from req.params at function updatePrice");
+        const { newPrice } = req.body
+        if (!newPrice) throw new Error("Couldn't get all fields from req.body at function updatePrice");
+        const productsDB = await ProductModel.findByIdAndUpdate(id, { price: newPrice });
         res.send({ productsDB });
     } catch (error) {
         res.send({ error: error.message });

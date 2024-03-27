@@ -11,7 +11,7 @@ export const useShowSideBar = () => {
         setSsideBarVisiable(!sideBarVisiable)
     }
 
-    return { sideBarVisiable, changeSideBarVisiable }
+    return { sideBarVisiable,changeSideBarVisiable }
 }
 
 export const useGetSearch = () => {

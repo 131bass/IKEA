@@ -16,7 +16,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 
     useEffect(() => {
         setBgImg(product.imgUrl)
-    }, [])
+    }, [product])
     return (
         <div style={{ display: "block", borderBottom: "1px solid gray", width: "280px" }}>
             <div onMouseDown={() => {

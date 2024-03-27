@@ -36,8 +36,8 @@ const UserModel = model("users", UserSchema)
 export default UserModel;
 
 export const UserValidation = Joi.object({
-  firstName: Joi.string().alphanum().min(2).max(16).required(),
-  lastName: Joi.string().alphanum().min(2).max(16).required(),
+  firstName: Joi.string().min(2).max(16).required(),
+  lastName: Joi.string().min(2).max(16).required(),
   email: Joi.string().email().required(),
   password: joiPassword
     .string()

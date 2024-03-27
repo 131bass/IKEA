@@ -31,9 +31,10 @@
 .chatWrapper {
     position: relative;
     transition: all 0.2s;
-
     background-color: aqua;
-z-index: 3;
+    z-index: 3;
+    cursor: pointer;
+
     img {
         position: fixed;
         left: 2%;

@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
             { path: "/login", element: <LoginPage/> },
             { path: "/favourites", element: <Favourites/> },
             { path: "/admin", element: <Admin/> },
-            { path: "/profile/:id", element: <Profile/> }
+            { path: "/profile", element: <Profile/> }
 
             
         ]

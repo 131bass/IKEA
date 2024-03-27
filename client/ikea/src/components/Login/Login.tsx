@@ -22,7 +22,7 @@ const Login: FC<LoginProps> = ({ loginMode }) => {
 
   return (
 
-    <div>
+  
       <div className={loginMode==LoginMode.FULLPAGE?"login":"login sideBar"}>
         <div className="text">
           <h2>היכנסו לחשבון איקאה שלכם</h2>
@@ -54,7 +54,7 @@ const Login: FC<LoginProps> = ({ loginMode }) => {
           </form>
         </div>
       </div >
-    </div>
+  
   )
 }
 

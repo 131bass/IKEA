@@ -1,5 +1,5 @@
 import express from 'express';
-import { addProduct, deleteProduct, getAllProducts, getProduct, getProductsByName, getProductsBySubCategory } from './productsCtrl';
+import { addProduct, deleteProduct, getAllProducts, getProduct, getProductsByName, getProductsBySubCategory, updatePrice } from './productsCtrl';
 
 
 
@@ -11,6 +11,7 @@ router
   .get("/getProduct", getProduct)
   .get("/getProductsByName", getProductsByName)
   .post("/addProduct", addProduct)
-  .delete("/", deleteProduct)
+  .delete("/:id", deleteProduct)
+  .patch("/:id", updatePrice)
 
 export default router;

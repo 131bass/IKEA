@@ -10,24 +10,24 @@ const SubCategory = () => {
 
   useEffect(() => {
     if (name)
-    handleGetSubCategoryProducts(name)
-  }, [products])
-  
-  return (
-    <div style={{ marginRight:"10%"}}>
-      <h1>{name}</h1>
-      <p> {products?.length} פריטים  </p>
-      <div className="products" style={{display:"flex", flexWrap:"wrap"}}>
+      handleGetSubCategoryProducts(name)
+  }, [name])
 
-      {products && products.map((product) => {
-        return(
-          
-          <div style={{ transition:"all 0.2s"}}>
-        <ProductCard product={product} />
-        </div>
+  return (
+    <div style={{ marginRight: "10%" }}>
+      <h1>{name}</h1>
+      <p> {products?.length} פריטים</p>
+      <div className="products" style={{ display: "flex", flexWrap: "wrap" }}>
+
+        {products && products.map((product) => {
+          return (
+
+            <div style={{ transition: "all 0.2s" }}>
+              <ProductCard product={product} />
+            </div>
           )
         })}
-        </div>
+      </div>
     </div>
 
   )
