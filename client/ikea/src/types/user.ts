@@ -6,5 +6,6 @@ export interface User{
     email: string, 
     phoneNumber?:string,
     password: string,
-    isAdmin:boolean
+    isAdmin:boolean,
+    _id?:string
 }

@@ -2,24 +2,6 @@ import { useState } from "react"
 import { Product } from "../../types/product"
 import axios from "axios"
 
-
-
-export const useGetAllProducts = () => {
-    const [products, setProducts] = useState<Product[]>()
-
-    const handleGetAllProducts = async () => {
-        try {
-            const { data } = await axios.get("/api/products/getAllProducts")
-            setProducts(data.products)
-            console.log(data.products)
-        } catch (error) {
-            console.error(error)
-        }
-    }
-    return {products, handleGetAllProducts }
-
-}
-
 export const useAddProduct = () => {
     const initialState: Product = {
         name: "",

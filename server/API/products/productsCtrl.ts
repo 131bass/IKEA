@@ -19,13 +19,14 @@ export async function addProduct(req, res) {
 export async function deleteProduct(req, res) {
     try {
         const { id } = req.params;
-        if (!id) throw new Error("Couldn't get all fields from req.req.params at function deleteProduct");
+        if (!id) throw new Error("Couldn't get all fields from req.params at function deleteProduct");
         const productsDB = await ProductModel.findByIdAndDelete(id);
         res.send({ productsDB });
     } catch (error) {
         res.send({ error: error.message });
     }
 }
+
 export async function updatePrice(req, res) {
     try {
         const { id } = req.params;

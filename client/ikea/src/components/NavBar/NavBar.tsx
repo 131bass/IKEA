@@ -92,7 +92,7 @@ const NavBar = () => {
                     {!user.email ?
                         <button className="loginOrRegister" onClick={changeSideBarVisiable} ><span><img src={profileIcon} alt="profile" /> </span>היי! התחברו או הירשמו</button>
                         :
-                        <button style={{backgroundColor:"black", color:"white", width:"40px", fontWeight:"bold"}} className="loginOrRegister" onClick={() => { navigate('/profile') }} >{user.firstName.charAt(0)+" "+user.lastName.charAt(0)}</button>
+                        <button style={{display:"flex", justifyContent:"space-between", width:"fit-content"}}  className="loginOrRegister" onClick={() => { navigate('/profile') }} ><p style={{backgroundColor:"black", color:"white", width:"40px", padding:"12px 0px", borderRadius:"50%", fontWeight:"bold", marginRight:"-10px"}}>{user.firstName.charAt(0)+" "+user.lastName.charAt(0)}</p><p style={{marginLeft:"10px"}}>{`היי ${user.firstName}!`}</p></button>
                     }
                     <button className='addToWishList'><Link to="/favourites"><img src={heartIcon} alt="heart" /></Link></button>
                 </div>

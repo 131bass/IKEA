@@ -11,7 +11,6 @@ export const useLogin = () => {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-
     const login = async (ev: React.FormEvent<HTMLFormElement>) => {
         try {
             ev.preventDefault()
@@ -27,4 +26,3 @@ export const useLogin = () => {
     return { user, setUser, login }
 }
 
-// setUserLoggedIn

@@ -5,6 +5,8 @@ import { useGetProductByItemNumber } from './productPageHooks'
 import editIcon from './images/edit.png'
 import saveEditIcon from './images/saveEdit.png'
 import cancelIcon from './images/cancel.png'
+import { useAppSelector } from '../../app/hooks'
+import { userLoggedInSelector } from '../../features/loggedInUser/userSlice'
 
 const ProductPage = () => {
 
@@ -37,9 +39,11 @@ const ProductPage = () => {
       }
     } catch (error) {
       console.error(error)
-
     }
   }
+
+  const user = useAppSelector(userLoggedInSelector)
+
 
   useEffect(() => {
     if (itemNumber)
@@ -58,7 +62,7 @@ const ProductPage = () => {
           <p>{product?.name}</p>
 
           {editPrice ? <>
-            <textarea name="" id="" cols="10" rows="1" onInput={(ev) => {
+            <textarea name="editPrice" id="editPrice" cols={10} rows={1} onInput={(ev) => {
               setPrice(Number((ev.target as HTMLInputElement).value))
             }}
             >{product?.price}</textarea>
@@ -66,15 +70,16 @@ const ProductPage = () => {
               if (price)
                 handleUpdatePrice(price)
               setEditPrice(false)
-            }} ><img style={{marginRight:"20px", border:"1px solid gray", borderRadius:"5px", cursor:"pointer"}} src={saveEditIcon} /></span>
+            }} ><img style={{ marginRight: "20px", border: "1px solid gray", borderRadius: "5px", cursor: "pointer" }} src={saveEditIcon} /></span>
           </>
-            :
-            <>
-            <h2>&#8362;{product?.price}<span onClick={() => { setEditPrice(true) }} ><img style={{marginRight:"20px", border:"1px solid gray", borderRadius:"5px", cursor:"pointer"}} src={editIcon} /></span></h2>
-          <button style={{backgroundColor:"red",width:"40px",height:"40px",border:"1px solid black", borderRadius:"50%", backgroundImage:`url(${cancelIcon})`, backgroundSize:"contain", backgroundPosition:"center"}} onClick={handleDeleteProduct}></button>
-            </>
+            : user.isAdmin ?
+              <>
+                <h2>&#8362;{product?.price}<span onClick={() => { setEditPrice(true) }} ><img style={{ marginRight: "20px", border: "1px solid gray", borderRadius: "5px", cursor: "pointer" }} src={editIcon} /></span></h2>
+                <button style={{ backgroundColor: "red", width: "40px", height: "40px", border: "1px solid black", borderRadius: "50%", backgroundImage: `url(${cancelIcon})`, backgroundSize: "contain", backgroundPosition: "center" }} onClick={handleDeleteProduct}></button>
+              </> :
+              <h2>&#8362;{product?.price}</h2>
           }
-          
+
         </div>
       </div>
       <div style={{ width: "60%" }}>

@@ -10,5 +10,6 @@ export interface Product {
     category: string,
     subCategory: string,
     isNew: boolean,
-    itemNumber:string
+    itemNumber:string,
+    _id?:string
 }

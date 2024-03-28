@@ -42,7 +42,7 @@ export async function login(req, res) {
     try {
 
         const { email, password } = req.body;
-        if (!email || !password) throw new Error("Couldn't get all fields of user from req.body");
+        if (!email || !password) throw new Error("Couldn't get all fields of user from req.body in function login");
 
         const userDB = await UserModel.findOne({ email });
         if (!userDB) throw new Error("User with that email can't be found")
@@ -59,6 +59,48 @@ export async function login(req, res) {
 
         res.cookie("user", JWTCookie);
         res.send({ login: true, userDB });
+    } catch (error) {
+        res.send({ error: error.message });
+    }
+}
+
+export async function checkPassword(req, res) {
+    try {
+        const { userID, passwordToCheck } = req.body
+        if (!userID || !passwordToCheck) throw new Error("Couldn't get all fields of user from req.body in function checkPassword");
+
+        const userDB = await UserModel.findById(userID)
+        if (!userDB) throw new Error("Can't find user in function checkPassword")
+        if (!userDB.password) throw new Error("No password in DB in function checkPassword");
+
+        const isMatch = await bcrypt.compare(passwordToCheck, userDB.password);
+        if (!isMatch) throw new Error("Password is not match");
+        res.send({ matched: true })
+    } catch (error) {
+        res.send({ error: error.message });
+    }
+}
+
+export async function deleteUser(req, res) {
+    try {
+        const { id } = req.params;
+        if (!id) throw new Error("Couldn't get all fields from req.params at function deleteUser");
+        const userDB = await UserModel.findByIdAndDelete(id);
+        res.send({ userDB });
+    } catch (error) {
+        res.send({ error: error.message });
+    }
+}
+
+export async function updateDetails(req, res) {
+    try {
+        const { id } = req.params;
+        if (!id) throw new Error("Couldn't get all fields from req.params at function updateDetails");
+        const { details } = req.body
+        if (!details) throw new Error("Couldn't get all fields from req.body at function updateDetails");
+        const userDB = await UserModel.findByIdAndUpdate(id, { firstName: details.firstName, lastName: details.lastName, phoneNumber: details.phoneNumber });
+        await userDB.save()
+        res.send({ userDB });
     } catch (error) {
         res.send({ error: error.message });
     }

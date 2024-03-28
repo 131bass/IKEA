@@ -11,7 +11,7 @@ router
   .get("/getProduct", getProduct)
   .get("/getProductsByName", getProductsByName)
   .post("/addProduct", addProduct)
-  .delete("/:id", deleteProduct)
   .patch("/:id", updatePrice)
+  .delete("/:id", deleteProduct)
 
 export default router;
