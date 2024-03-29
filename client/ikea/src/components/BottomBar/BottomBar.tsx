@@ -1,8 +1,8 @@
 import './bottomBar.scss'
-import facebookIcon from './images/facebook.png'
-import instegramIcon from './images/instegram.png'
-import youtubeIcon from './images/youtube.png'
-import languageIcon from './images/language.png'
+import facebookIcon from '../../assets/icons/facebook.png'
+import instegramIcon from '../../assets/icons/instegram.png'
+import youtubeIcon from '../../assets/icons/youtube.png'
+import languageIcon from '../../assets/icons/language.png'
 import { useNavigate } from 'react-router-dom'
 
 

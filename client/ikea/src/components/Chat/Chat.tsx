@@ -1,5 +1,5 @@
 import "./chat.scss"
-import chatIcon from "./chatImg.png"
+import chatIcon from "../../assets/icons/chatImg.png"
 
 
 

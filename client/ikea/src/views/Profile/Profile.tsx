@@ -1,33 +1,33 @@
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { setUserLoggedIn, setlogOut, userLoggedInSelector } from '../../features/loggedInUser/userSlice'
-import './profile.scss'
-import profileIcon from './../../components/NavBar/images/profile.png'
-import lockIcon from './../../components/NavBar/images/lock.png'
-import garbageIcon from './../../components/NavBar/images/garbage.png'
-import leftArrowIcon from './../../components/NavBar/images/leftArrow.png'
-import editIcon from './../ProductPage/images/edit.png'
-import saveEditIcon from './../ProductPage/images/saveEdit.png'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
 import { User } from '../../types/user'
+import garbageIcon from '../../assets/icons/garbage.png'
+import leftArrowIcon from '../../assets/icons/leftArrow.png'
+import lockIcon from '../../assets/icons/lock.png'
+import profileIcon from '../../assets/icons/profile.png'
+import editIcon from '../../assets/icons/edit.png'
+import saveEditIcon from '../../assets/icons/saveEdit.png'
+import './profile.scss'
 
 const Profile = () => {
-  let user = useAppSelector(userLoggedInSelector)
+  const userRedux = useAppSelector(userLoggedInSelector)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const [showOptions, setShowOptions] = useState("")
   const [editDetails, setEditDetails] = useState(false)
-  const [profileDetails, setProfileDetails] = useState(user)
+  const [profileDetails, setProfileDetails] = useState(userRedux)
   const [passwordToCheck, setPasswordToCheck] = useState("")
   const [errorMassage, setErrorMassage] = useState("")
   const [deleteUser, setDeleteUser] = useState(false)
 
   const handleUpdateDetails = async (details: User) => {
     try {
-      if (user && details) {
-        const userID = user._id
+      if (userRedux && details) {
+        const userID = userRedux._id
         const { data } = await axios.patch(`/api/users/${userID}`, { details })
         dispatch(setUserLoggedIn(profileDetails))
 
@@ -39,8 +39,8 @@ const Profile = () => {
 
   const handleDeleteUser = async () => {
     try {
-      if (user && passwordToCheck) {
-        const userID = user._id
+      if (userRedux && passwordToCheck) {
+        const userID = userRedux._id
         const { data } = await axios.post(`/api/users/checkPassword`, { userID, passwordToCheck })
         if (data.matched) {
           setProfileDetails({
@@ -62,14 +62,31 @@ const Profile = () => {
     }
   }
 
+  const logOut = async () => {
+    try {
+      const { data } = await axios.get(`/api/users/logout`)
+      dispatch(setlogOut())
+    } catch (error) {
+      console.error(error)
+
+    }
+  }
+
+  useEffect(() => {
+    !userRedux.email ? navigate("/login") : null
+  }, [userRedux])
 
   return (
     <div style={{ width: "75%", marginRight: "10%", marginBottom: "100px" }}>
-      {!showOptions ?
+      {userRedux && !showOptions ?
         <div >
-          <h1>{`היי ${user.firstName}!`}</h1>
+          {userRedux.isAdmin ? <div style={{ display: "flex", width: "48%", justifyContent: "space-between", alignItems: "center" }}><h1>{`היי ${userRedux.firstName}!`}</h1> <button style={{ fontWeight: "bold", backgroundColor: "white", border: "1.5px solid black", borderRadius: "20px", height: "40px", width: "100px", cursor: "pointer" }} onClick={() => { navigate("/admin") }}>לדף מנהל</button></div>
+            :
+            <h1>{`היי ${userRedux.firstName}!`}</h1>
+          }
           <p>רוצה לעבור לחשבון אחר? <span style={{ fontWeight: "bold", cursor: "pointer" }} onClick={() => {
-            dispatch(setlogOut())
+
+            logOut()
             navigate("/login")
           }}>יציאה</span></p>
           <div style={{ display: "flex", gap: "40px" }}>
@@ -116,7 +133,7 @@ const Profile = () => {
           </div>
         </div>
         :
-        showOptions == 'profileDetails' ?
+        userRedux.email && showOptions == 'profileDetails' ?
           <div>
             <p><span style={{ cursor: "pointer" }} onClick={() => { setShowOptions("") }}>הפרופיל שלי</span>{` > פרטי הפרופיל`}</p>
             <div style={{ width: "60%", display: "flex", justifyContent: "space-between", padding: "30px 35px", border: "1px solid gray", borderRadius: "5px" }}>
@@ -125,13 +142,13 @@ const Profile = () => {
                   <div>
                     <h4>מידע אישי</h4>
                     <h5>שם מלא</h5>
-                    <p>{user.firstName} {user.lastName}</p>
+                    <p>{userRedux.firstName} {userRedux.lastName}</p>
                     <h5>כתובת דוא"ל</h5>
-                    <p>{user.email}</p>
-                    {user.phoneNumber ?
+                    <p>{userRedux.email}</p>
+                    {userRedux.phoneNumber ?
                       <>
                         <h5>מספר טלפון</h5>
-                        <p>{user.phoneNumber}</p>
+                        <p>{userRedux.phoneNumber}</p>
                       </>
                       : null}
                   </div>
@@ -144,17 +161,17 @@ const Profile = () => {
                     <textarea name="editFirstName" id="editFirstName" cols={10} rows={1} onInput={(ev) => {
                       setProfileDetails({ ...profileDetails, firstName: (ev.target as HTMLTextAreaElement).value })
                     }}
-                    >{user.firstName}</textarea>
+                    >{userRedux.firstName}</textarea>
                     <h5>שם משפחה</h5>
                     <textarea name="editLastName" id="editLastName" cols={10} rows={1} onInput={(ev) => {
                       setProfileDetails({ ...profileDetails, lastName: (ev.target as HTMLTextAreaElement).value })
                     }}
-                    >{user.lastName}</textarea>
+                    >{userRedux.lastName}</textarea>
                     <h5>מספר טלפון</h5>
                     <textarea name="editPhoneNumber" id="editPhoneNumber" cols={10} rows={1} onInput={(ev) => {
                       setProfileDetails({ ...profileDetails, phoneNumber: (ev.target as HTMLTextAreaElement).value })
                     }}
-                    >{user.phoneNumber}</textarea>
+                    >{userRedux.phoneNumber}</textarea>
                   </div>
                   <div>
                     <button onClick={() => {

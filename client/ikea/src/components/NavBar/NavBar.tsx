@@ -2,15 +2,16 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
 import categoriesArr from "../../utils/categories"
 import Login, { LoginMode } from "../Login/Login"
-import cameraIcon from './images/camera.png'
-import cancelIcon from './images/cancel.png'
-import heartIcon from './images/heart.png'
-import profileIcon from './images/profile.png'
-import searchIcon from './images/search.png'
+import cameraIcon from '../../assets/icons/camera.png'
+import cancelIcon from '../../assets/icons/cancel.png'
+import heartIcon from '../../assets/icons/heart.png'
+import profileIcon from '../../assets/icons/profile.png'
+import searchIcon from '../../assets/icons/search.png'
 import "./navBar.scss"
 import { useGetProductsByName, useGetSearch, useRenderNav, useRenderSubCategories, useScrollBar, useShowSideBar } from './navBarHooks'
-import { useAppSelector } from "../../app/hooks"
-import { userLoggedInSelector } from "../../features/loggedInUser/userSlice"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { setUserLoggedIn, userLoggedInSelector } from "../../features/loggedInUser/userSlice"
+import axios from "axios"
 
 const NavBar = () => {
 
@@ -20,7 +21,7 @@ const NavBar = () => {
 
     const { arrToRender, showCategories } = useRenderNav()
 
-    const { sideBarVisiable, changeSideBarVisiable } = useShowSideBar()
+    const { sideBarVisiable, changeSideBarVisiable, setSideBarVisiable } = useShowSideBar()
 
     const { subCatArr, subCatVisiable, setSubCatVisiable, showSubCategories } = useRenderSubCategories()
 
@@ -32,17 +33,35 @@ const NavBar = () => {
 
     const navigate = useNavigate()
 
-    const user = useAppSelector(userLoggedInSelector)
+    const userRedux = useAppSelector(userLoggedInSelector)
 
+    const dispatch = useAppDispatch()
+
+
+    const getUser = async () => {
+        try {
+            const { data } = await axios.get(`/api/users/user`)
+            dispatch(setUserLoggedIn(data.userDB))
+
+        } catch (error) {
+            console.error(error)
+
+        }
+    }
 
     useEffect(() => {
         showCategories("מוצרים")
     }, [])
 
+
+
     useEffect(() => {
         const searchRequest = setTimeout(() => { handleGetProductsByName(search) }, 1500);
         return () => clearTimeout(searchRequest);
     }, [search]);
+    useEffect(() => {
+        getUser()
+    }, [])
 
     return (
         <>
@@ -54,16 +73,16 @@ const NavBar = () => {
                     </div>
                 </div>
                 : null}
-            <nav onClick={() => {
-
-            }}>
+            <nav >
                 <div className="topNav">
                     <Link to="/">
                         <img src="https://www.ikea.com/il/he/static/ikea-logo.f7d9229f806b59ec64cb.svg" alt="ikea logo" />
                     </Link>
                     <div className={!showSearchBox ? "navSearchBox" : "navSearchBox open"}>
                         {searching && search ? null : <img src={searchIcon} alt="search" />}
-                        <input type="text" name='navSearch' id='navSearch' value={search} placeholder='מה לחפש לך?' onClick={() => { setShowSearchBox(!showSearchBox) }} onInput={(ev) => {
+                        <input type="text" name='navSearch' id='navSearch' value={search} placeholder='מה לחפש לך?' onClick={() => {
+                            setShowSearchBox(!showSearchBox)
+                        }} onInput={(ev) => {
                             setSearch((ev.target as HTMLInputElement).value)
                             setSearching(true)
                         }} />
@@ -89,10 +108,10 @@ const NavBar = () => {
                             </div>
                             : null}
                     </div>
-                    {!user.email ?
+                    {!userRedux.email ?
                         <button className="loginOrRegister" onClick={changeSideBarVisiable} ><span><img src={profileIcon} alt="profile" /> </span>היי! התחברו או הירשמו</button>
                         :
-                        <button style={{display:"flex", justifyContent:"space-between", width:"fit-content"}}  className="loginOrRegister" onClick={() => { navigate('/profile') }} ><p style={{backgroundColor:"black", color:"white", width:"40px", padding:"12px 0px", borderRadius:"50%", fontWeight:"bold", marginRight:"-10px"}}>{user.firstName.charAt(0)+" "+user.lastName.charAt(0)}</p><p style={{marginLeft:"10px"}}>{`היי ${user.firstName}!`}</p></button>
+                        <button style={{ display: "flex", justifyContent: "space-between", width: "fit-content" }} className="loginOrRegister" onClick={() => { navigate('/profile') }} ><p style={{ backgroundColor: "black", color: "white", width: "40px", padding: "12px 0px", borderRadius: "50%", fontWeight: "bold", marginRight: "-10px" }}>{userRedux.firstName.charAt(0) + " " + userRedux.lastName.charAt(0)}</p><p style={{ marginLeft: "10px" }}>{`היי ${userRedux.firstName}!`}</p></button>
                     }
                     <button className='addToWishList'><Link to="/favourites"><img src={heartIcon} alt="heart" /></Link></button>
                 </div>

@@ -6,12 +6,12 @@ import axios from 'axios';
 
 
 export const useShowSideBar = () => {
-    const [sideBarVisiable, setSsideBarVisiable] = useState(false)
+    const [sideBarVisiable, setSideBarVisiable] = useState(false)
     const changeSideBarVisiable = () => {
-        setSsideBarVisiable(!sideBarVisiable)
+        setSideBarVisiable(!sideBarVisiable)
     }
 
-    return { sideBarVisiable,changeSideBarVisiable }
+    return { sideBarVisiable,setSideBarVisiable,changeSideBarVisiable }
 }
 
 export const useGetSearch = () => {

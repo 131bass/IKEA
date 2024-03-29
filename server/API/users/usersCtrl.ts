@@ -17,14 +17,7 @@ export async function register(req, res) {
         const userDB = new UserModel({ firstName, lastName, email, phoneNumber, password: hash });
         await userDB.save();
 
-        const cookie = { user: userDB }
-        const secret = process.env.JWT_SECRET;
-        if (!secret) throw new Error("Couldn't load secret from .env");
-
-        const JWTCookie = jwt.encode(cookie, secret);
-
         if (userDB) {
-            res.cookie("user", JWTCookie);
             res.send({ register: true, userDB });
         } else {
             res.send({ register: false });
@@ -51,13 +44,13 @@ export async function login(req, res) {
         const isMatch = await bcrypt.compare(password, userDB.password);
         if (!isMatch) throw new Error("Email or password do not match");
 
-        const cookie = { user: userDB };
+        const cookie = { userID: userDB._id };
         const secret = process.env.JWT_SECRET;
         if (!secret) throw new Error("Couldn't load secret from .env");
 
         const JWTCookie = jwt.encode(cookie, secret);
 
-        res.cookie("user", JWTCookie);
+        res.cookie("userID", JWTCookie, { maxAge: 1000 * 60 * 10, httpOnly: true });
         res.send({ login: true, userDB });
     } catch (error) {
         res.send({ error: error.message });
@@ -103,5 +96,31 @@ export async function updateDetails(req, res) {
         res.send({ userDB });
     } catch (error) {
         res.send({ error: error.message });
+    }
+}
+
+
+export async function getUser(req, res) {
+    try {
+        const { userID } = req.cookies
+        if(userID){
+            const secret = process.env.JWT_SECRET;
+            const x = jwt.decode(userID, secret)
+            const userDB = await UserModel.findById(x.userID)
+            res.send({ userDB })
+        }
+    } catch (error) {
+        res.send({ error: error.message });
+
+    }
+}
+
+export async function logout(req, res) {
+    try {
+        res.cookie("userID", "", -1);
+        res.send({ logout: true })
+    } catch (error) {
+        res.send({ error: error.message });
+
     }
 }

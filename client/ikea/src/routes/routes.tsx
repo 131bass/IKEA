@@ -10,6 +10,7 @@ import Admin from "../views/Admin/Admin";
 import Profile from "../views/Profile/Profile";
 import SubCategory from './../views/SubCategory/SubCategory';
 import Category from "../views/Category/Category";
+import NotExist from "../views/NotExist/NotExist";
 
 
 
@@ -26,12 +27,11 @@ export const router = createBrowserRouter([
             { path: "/subcategory/:name", element: <SubCategory /> },
             { path: "/category/:name", element: <Category /> },
             { path: "/register", element: <Register /> },
-            { path: "/login", element: <LoginPage/> },
-            { path: "/favourites", element: <Favourites/> },
-            { path: "/admin", element: <Admin/> },
-            { path: "/profile", element: <Profile/> }
-
-            
+            { path: "/login", element: <LoginPage /> },
+            { path: "/favourites", element: <Favourites /> },
+            { path: "/admin", element: <Admin /> },
+            { path: "/profile", element: <Profile /> },
+            { path: "/*", element: <NotExist /> }
         ]
     }
 ])

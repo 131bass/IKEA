@@ -6,7 +6,7 @@
     background-color: rgba(141, 141, 141, 0.5);
     z-index: 2;
     transition: all 0.2s;
-
+ 
     .formLogin {
         padding-top: 2%;
         position: absolute;
@@ -129,25 +129,28 @@ nav {
         gap: 10px;
         justify-content: space-around;
         padding: 0px 15px;
+
         img {
             width: 1.7em;
             height: 1.7em;
-            
+
         }
-        
+
         &:hover {
             background-color: #dbd9d9;
             cursor: text;
         }
-        &.open{
+
+        &.open {
             border: 2px solid navy;
             background-color: white;
-            
+
             &:hover {
                 // background-color: white;
                 cursor: text;
             }
         }
+
         input {
             border: none;
             background: none;

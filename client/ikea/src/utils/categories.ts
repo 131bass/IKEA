@@ -1,6 +1,6 @@
 import { CategoriesTypeArr } from "../types/category"
-import productsIcon from '../components/NavBar/images/products.png'
-import roomsIcon from '../components/NavBar/images/rooms.png'
+import productsIcon from '../assets/icons/products.png'
+import roomsIcon from '../assets/icons/rooms.png'
 
 
 

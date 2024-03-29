@@ -8,7 +8,7 @@ import "./admin.scss"
 
 
 const Admin = () => {
-  const user = useAppSelector(userLoggedInSelector)
+  const userRedux = useAppSelector(userLoggedInSelector)
   const navigate = useNavigate()
 
   const { product, setProduct, handleAddProduct } = useAddProduct()
@@ -17,8 +17,8 @@ const Admin = () => {
   const [showAddProduct, setShowAddProduct] = useState(false)
 
   useEffect(() => {
-    !user.isAdmin ? navigate("/") : null
-  }, [user])
+    !userRedux.isAdmin ? navigate("/") : null
+  }, [userRedux])
 
   return (
     <div>
