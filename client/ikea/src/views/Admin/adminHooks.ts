@@ -7,39 +7,41 @@ export const useAddProduct = () => {
         name: "",
         description: "",
         imgUrl: "",
-        imgUrlView:"",
+        imgUrlView: "",
         series: "",
         price: 0,
         priceComments: "",
         category: "",
         subCategory: "",
         isNew: true,
-        itemNumber:"000.000.00"
+        itemNumber: "000.000.00"
     }
     const [product, setProduct] = useState<Product>(initialState)
-
+    const [message, setMessage] = useState<string>()
     const handleAddProduct = async (ev: React.FormEvent<HTMLFormElement>) => {
         try {
             ev.preventDefault()
-            console.log("start")
+
             const { data } = await axios.post("/api/products/addProduct", {
                 name: product.name,
                 description: product.description,
                 imgUrl: product.imgUrl,
-                imgUrlView:product.imgUrlView,
+                imgUrlView: product.imgUrlView,
                 series: product.series,
                 price: product.price,
                 priceComments: product.priceComments,
                 category: product.category,
                 subCategory: product.subCategory,
-                itemNumber:product.itemNumber
+                itemNumber: product.itemNumber
             })
-            console.log(data)
+            if (data.added) {
+                setMessage(data.message)
+            }
         } catch (error) {
             console.error(error)
         }
     }
-    return { product, setProduct, handleAddProduct }
+    return { product, setProduct, handleAddProduct, message }
 }
 
 export const useDeletProduct = () => {

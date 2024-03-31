@@ -1,0 +1,13 @@
+button.headButton{
+    background: none;
+    border: 1.5px solid black;
+    font-weight: bold;
+    height: 40px;
+    border-radius: 20px;
+    width: 180px;
+    cursor: pointer;
+margin-bottom: 15px;
+    &:hover {
+        border: 2.5px solid black;
+    }
+}

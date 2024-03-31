@@ -5,18 +5,18 @@ import Spot from "../spot/Spot"
 
 export interface ImageProps {
   spotLocation?: { x: number, y: number }[],
-  product: any,
+  itemNumbers?: string[],
   url: string
 }
 
-const Image: FC<ImageProps> = ({ product, spotLocation, url }) => {
+const Image: FC<ImageProps> = ({ itemNumbers, spotLocation, url }) => {
   return (
     <div className="image" style={{ backgroundImage: `url(${url})` }}>
-      {spotLocation ?
-        spotLocation.map((spot) => {
+      {spotLocation&&itemNumbers ?
+        spotLocation.map((spot, index) => {
           return (
             <div className="spotAtImage" style={{ position: "absolute", left: `${spot.x}%`, bottom: `${spot.y}%` }}>
-              <Spot product={product} />
+              <Spot itemNumber={itemNumbers[index]} />
             </div>
           )
         })

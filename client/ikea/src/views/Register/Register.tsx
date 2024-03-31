@@ -1,12 +1,19 @@
 import { Link } from "react-router-dom"
 import "./register.scss"
 import { useRegister } from "./registerHooks"
+import { useState } from "react"
+import hidePasswordIcon from '../../assets/icons/hidePassword.png'
+import showPasswordIcon from '../../assets/icons/showPassword.png'
 
 
 const Register = () => {
 
     const { user, setUser, handleRegister } = useRegister()
+    const [showPassword, setShowPassword] = useState(false)
 
+    const changeShowPassword = () => {
+        setShowPassword(!showPassword)
+    }
 
     return (
         <div className="register">
@@ -43,10 +50,15 @@ const Register = () => {
                         }} />
 
                     <label htmlFor="password">סיסמה</label>
-                    <input type="password" name="password" id="password" value={user.password} required
-                        onInput={(ev) => {
-                            setUser({ ...user, password: (ev.target as HTMLInputElement).value })
-                        }} />
+                    <div style={{ position: "relative" }}>
+                        <input type={showPassword ? "text" : "password"} style={{width:"98%"}} name="password" id="password" value={user.password} required
+                            onInput={(ev) => {
+                                setUser({ ...user, password: (ev.target as HTMLInputElement).value })
+                            }} />
+                        <img onClick={changeShowPassword} style={{ height: "2.2em", width: "2.5em", position: "absolute", cursor: "pointer", left: "10px", top: "5px" }} src={
+                            showPassword ? hidePasswordIcon
+                                : showPasswordIcon} />
+                    </div>
                     <div className="checkPrivate">
                         <input type="checkbox" name="checkPrivate" id="checkPrivate" required />
                         <label htmlFor="checkPrivate">ידוע לי כי המידע אודותיי ישמר במערכות החברה בכפוף ל<span><a href="">מדיניות הפרטיות</a></span></label>

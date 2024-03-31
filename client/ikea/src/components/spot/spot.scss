@@ -1,12 +1,13 @@
 .spot {
     position: absolute;
-right: 20%;
+    // right: 20%;
+
     &:hover {
         .tag {
             display: flex;
             position: absolute;
-            left: 100%;
-            top: -7em;
+            // left: -3em;
+            // top: -7.5em;
             z-index: 3;
         }
     }
@@ -23,6 +24,7 @@ right: 20%;
     align-items: center;
     justify-content: center;
     transition: all 0.2s;
+    cursor: pointer;
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.75);
@@ -45,14 +47,15 @@ right: 20%;
 }
 
 .tag {
-    margin-right: 200px;
+    // margin-right: 200px;
     background-color: white;
-    width: 8em;
-    height: 7em;
+    width: 9em;
+    height: fit-content;
     border: 1px rgb(185, 185, 185) solid;
     box-shadow: 1px 1px 6px gray;
     display: none;
     justify-content: space-between;
+    cursor: pointer;
 
     .details {
         margin-right: 10%;

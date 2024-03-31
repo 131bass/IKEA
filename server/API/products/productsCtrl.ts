@@ -7,7 +7,7 @@ export async function addProduct(req, res) {
 
         const productDB = new ProductModel({ name, description, imgUrl, imgUrlView, series, price, priceComments, category, subCategory, itemNumber });
         await productDB.save();
-
+        res.send({ productDB,added:true, message: "The product was created successfully" })
     } catch (error) {
         res.send({ error: error.message });
         console.error(error)

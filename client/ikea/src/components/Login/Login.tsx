@@ -1,8 +1,9 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import { Link } from "react-router-dom"
 import "./login.scss"
 import { useLogin } from "./loginHooks"
-
+import hidePasswordIcon from '../../assets/icons/hidePassword.png'
+import showPasswordIcon from '../../assets/icons/showPassword.png'
 
 export enum LoginMode {
   FULLPAGE = "fullPage",
@@ -16,7 +17,11 @@ interface LoginProps {
 
 const Login: FC<LoginProps> = ({ loginMode }) => {
   const { user, setUser, login, errorMassage, setErrorMassage } = useLogin()
+  const [showPassword, setShowPassword] = useState(false)
 
+  const changeShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
   return (
 
 
@@ -26,7 +31,7 @@ const Login: FC<LoginProps> = ({ loginMode }) => {
         <p>תוכלו ליהנות מחוויה אישית יותר, שבה לא תצטרכו למלא את הפרטים בכל פעם מחדש</p>
       </div>
       <div className="form">
-        <form onSubmit={login}>
+        <form onSubmit={login} style={{ position: "relative" }}>
           {loginMode == LoginMode.FULLPAGE ?
             <h4>היכנסו לחשבונכם או צרו חשבון עוד היום כדי ליהנות מחוויה אישית יותר</h4>
             : null}
@@ -40,16 +45,24 @@ const Login: FC<LoginProps> = ({ loginMode }) => {
 
 
           <label htmlFor="password">סיסמה</label>
-          <input type="password" name="password" id="password" value={user.password} required
-            onInput={(ev) => {
-              setUser({ ...user, password: (ev.target as HTMLInputElement).value })
-              setErrorMassage("")
-            }} />
+          <div style={{ position: "relative" }}>
+
+            <input type={showPassword ? "text" : "password"} style={{ width: "98%" }} name="password" id="password" value={user.password} required
+              onInput={(ev) => {
+                setUser({ ...user, password: (ev.target as HTMLInputElement).value })
+                setErrorMassage("")
+              }} />
+            <img onClick={changeShowPassword} style={{ height: "2.2em", width: "2.5em", position: "absolute", cursor: "pointer", left: "10px", top: "5px" }} src={
+              showPassword ? hidePasswordIcon
+                : showPasswordIcon} />
+          </div>
           {errorMassage ? <p>{errorMassage}</p> : null}
           <Link to={""} className="forgotPassword">שכחתם את הסיסמה?</Link>
           <button type="submit" className="submit">כניסה</button>
         </form>
-        <button className="toRegister"><Link to="/register">צרו חשבון</Link></button>
+        {loginMode == LoginMode.FULLPAGE ?
+          <button className="toRegister"><Link to="/register">צרו חשבון</Link></button>
+          : null}
       </div>
     </div >
 

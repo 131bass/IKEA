@@ -11,7 +11,7 @@ const Admin = () => {
   const userRedux = useAppSelector(userLoggedInSelector)
   const navigate = useNavigate()
 
-  const { product, setProduct, handleAddProduct } = useAddProduct()
+  const { product, setProduct, handleAddProduct, message } = useAddProduct()
 
 
   const [showAddProduct, setShowAddProduct] = useState(false)
@@ -93,6 +93,7 @@ const Admin = () => {
             <button type="submit">צור מוצר</button>
 
           </form>
+          {message ? <p>{message}</p> : null}
           <button onClick={() => {
             setShowAddProduct(false)
           }}>סגור</button>

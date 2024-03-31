@@ -22,7 +22,7 @@ const SubCategory = () => {
         {products && products.map((product) => {
           return (
 
-            <div style={{ transition: "all 0.2s" }}>
+            <div style={{ transition: "all 0.2s", cursor:"pointer" }}>
               <ProductCard product={product} />
             </div>
           )

@@ -23,12 +23,10 @@ export const useGetSearch = () => {
 export const useRenderNav = () => {
     const [arrToRender, setArrToRender] = useState<CategoriesTypeArr>(categoriesArr[0])
     const showCategories = (linkName: string) => {
-
         const categoriesArrToRender = (categoriesArr.find((element) => element.name == linkName))
 
         if (categoriesArrToRender) {
             setArrToRender(categoriesArrToRender)
-
         }
     }
     return { arrToRender, showCategories }
@@ -40,7 +38,7 @@ export const useRenderSubCategories = () => {
 
     const showSubCategories = (subCategoriArr: string[]) => {
         setSubCatArr(subCategoriArr)
-        setSubCatVisiable(!subCatVisiable)
+        // setSubCatVisiable(!subCatVisiable)
     }
 
     return {subCatArr,subCatVisiable,setSubCatVisiable,showSubCategories}
@@ -50,14 +48,14 @@ export const useRenderSubCategories = () => {
 export const useScrollBar = () => {
     const [scroll, setScroll] = useState(0)
 
-    const backward = () => {
+    const backward = (numOfPx:number) => {
         if (scroll > 0) {
-            setScroll(scroll - 140)
+            setScroll(scroll - numOfPx)
         }
     }
-    const forward = () => {
+    const forward = (numOfPx:number) => {
         if (scroll < 1540) {
-            setScroll(scroll + 140)
+            setScroll(scroll + numOfPx)
         }
     }
     return { backward, forward, scroll }

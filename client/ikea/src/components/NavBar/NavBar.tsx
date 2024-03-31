@@ -48,28 +48,34 @@ const NavBar = () => {
 
         }
     }
+    let [xPosition, setXPosition] = useState<number>(0)
+    const getCursorPosition = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        const x = event.clientX
+        console.log(x)
+        { x < 200 ? setXPosition(xPosition = x) : x > 1000 ? setXPosition(xPosition = x - 350) : setXPosition(xPosition = x - 200) }
+    }
 
     useEffect(() => {
         showCategories("מוצרים")
     }, [])
 
-
-
     useEffect(() => {
         const searchRequest = setTimeout(() => { handleGetProductsByName(search) }, 1500);
         return () => clearTimeout(searchRequest);
     }, [search]);
+
     useEffect(() => {
         getUser()
     }, [])
 
     return (
-        <>
+        <div style={{}}>
             {sideBarVisiable ?
                 <div className="side">
                     <div className="formLogin">
-                        <img src={cancelIcon} alt="cancel" onClick={changeSideBarVisiable} />
+                        <img className="cancelSideLogin" src={cancelIcon} alt="cancel" onClick={changeSideBarVisiable} />
                         <Login loginMode={LoginMode.SIDEBAR} />
+                        <button className="toRegister" onClick={changeSideBarVisiable}><Link to="/register">צרו חשבון</Link></button>
                     </div>
                 </div>
                 : null}
@@ -133,18 +139,38 @@ const NavBar = () => {
                         <>
                             <div className="navCategoriesWrapper">
                                 <div className='arrowButtons'>
-                                    <button className="backward" style={scroll == 0 ? { display: "none" } : { display: "block" }} onClick={backward}>&lt;</button>
-                                    <button className='forward' style={scroll > outerWidth + 140 ? { display: "none" } : { display: "block" }} onClick={forward}>&gt;</button>
+                                    {arrToRender.name == "חדרים" ?
+                                        <>
+                                            <button className="backward" style={scroll == 0 ? { display: "none" } : { display: "block" }} onClick={() => { backward(165) }}>&lt;</button>
+                                            <button className='forward' style={scroll > 750 ? { display: "none" } : { display: "block" }} onClick={() => { forward(165) }}>&gt;</button>
+                                        </>
+                                        :
+                                        <>
+                                            <button className="backward" style={scroll == 0 ? { display: "none" } : { display: "block" }} onClick={() => {
+                                                backward(140)
+                                                setSubCatVisiable(false)
+                                            }}>&lt;</button>
+                                            <button className='forward' style={scroll > outerWidth + 140 ? { display: "none" } : { display: "block" }} onClick={() => {
+                                                forward(140)
+                                                setSubCatVisiable(false)
+                                            }}>&gt;</button>
+                                        </>
+                                    }
                                 </div>
-                                <div className="navCategories" style={{ left: `${scroll}px` }}>
+                                <div className="navCategories" onMouseDown={(ev) => { getCursorPosition(ev) }} style={arrToRender.name == "חדרים" ? { left: `${scroll}px`, gap: "55px", width: "700px" } : { left: `${scroll}px` }}>
                                     {arrToRender.categories.map((item) => {
                                         return (
                                             <>
-                                                <div className="category" onClick={() => {
+                                                <div className="category" onClick={item.subCategories != subCatArr && subCatVisiable ? () => {
                                                     if (item.subCategories) {
                                                         showSubCategories(item.subCategories)
+                                                        setSubCatVisiable(true)
                                                     }
-
+                                                } : () => {
+                                                    if (item.subCategories) {
+                                                    showSubCategories(item.subCategories)
+                                                    setSubCatVisiable(!subCatVisiable)
+                                                    }
                                                 }} >
                                                     <img className={item.subCategories != subCatArr && subCatVisiable ? "blur" : ""} src={item.imgURL} alt={item.name} />
                                                     <p>{item.name}</p>
@@ -154,7 +180,11 @@ const NavBar = () => {
                                     })}
                                 </div>
                             </div>
-                            <div className="scrollbar" style={{ right: `${scroll / 2.3}px` }}></div>
+                            {arrToRender.name == "חדרים" ?
+                                <div className="scrollbar" style={{ right: `${scroll}px` }}></div>
+                                :
+                                <div className="scrollbar" style={{ right: `${scroll / 2.3}px` }}></div>
+                            }
                         </>
                         :
                         <div className="navCategoriesWrapper" style={{ borderBottom: "none" }}>
@@ -173,10 +203,12 @@ const NavBar = () => {
                         </div>
                     }
                 </div>
-                <div className={subCatVisiable ? "subCategories" : "subCategories hide"} style={subCatArr && subCatArr.length > 10 ? { columnCount: "2" } : {}}>
+                <div className={subCatVisiable ? "subCategories" : "subCategories hide"} style={subCatArr && subCatArr.length > 10 ? { columnCount: "2", left: xPosition + 'px', width: "380px" } : { left: xPosition + 'px', width: "250px" }}>
                     {subCatArr ?
                         <>
-                            <h4 style={{ columnSpan: "all" }}>
+                            <h4 onClick={() => {
+                                setSubCatVisiable(false)
+                            }} style={{ columnSpan: "all" }}>
                                 <Link to={`/category/${arrToRender.categories.find((catArr) => catArr.subCategories == subCatArr)?.name}`}>
 
                                     <span>לכל קטגוריית </span>
@@ -197,7 +229,7 @@ const NavBar = () => {
                 </div>
 
             </nav>
-        </>
+        </div>
     )
 }
 

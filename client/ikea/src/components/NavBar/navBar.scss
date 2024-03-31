@@ -16,7 +16,7 @@
         width: 35%;
         height: 96%;
 
-        img {
+        img.cancelSideLogin {
             position: absolute;
             left: 10px;
             width: 25px;
@@ -29,6 +29,27 @@
             }
 
         }
+
+        button.toRegister {
+            background: none;
+            height: 4em;
+            // margin-bottom: 1em;
+            border-radius: 2em;
+            cursor: pointer;
+            width: 80%;
+            border: 1.5px solid black;
+            margin-right: 10%;
+            &:hover{
+                border: 2px solid black;
+            }
+
+            a {
+                font-weight: bold;
+                color: black;
+                text-decoration-line: none;
+
+            }
+        }
     }
 
 }
@@ -36,14 +57,14 @@
 nav {
     width: 90vw;
     margin-right: 10%;
-
+position: relative;
     .subCategories {
         position: absolute;
         font-size: small;
         padding: 30px;
         background-color: white;
         gap: 40px;
-        width: fit-content;
+        // width: fit-content;
         height: fit-content;
         border: 1px solid gray;
         border-radius: 15px;

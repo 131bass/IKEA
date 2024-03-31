@@ -50,7 +50,7 @@ export async function login(req, res) {
 
         const JWTCookie = jwt.encode(cookie, secret);
 
-        res.cookie("userID", JWTCookie, { maxAge: 1000 * 60 * 10, httpOnly: true });
+        res.cookie("userID", JWTCookie, { maxAge: 1000 * 60 * 60, httpOnly: true });
         res.send({ login: true, userDB });
     } catch (error) {
         res.send({ error: error.message });
@@ -105,8 +105,8 @@ export async function getUser(req, res) {
         const { userID } = req.cookies
         if(userID){
             const secret = process.env.JWT_SECRET;
-            const x = jwt.decode(userID, secret)
-            const userDB = await UserModel.findById(x.userID)
+            const id = jwt.decode(userID, secret)
+            const userDB = await UserModel.findById(id.userID)
             res.send({ userDB })
         }
     } catch (error) {
